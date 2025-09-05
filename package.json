@@ -1,0 +1,59 @@
+{
+  "name": "fluidvault",
+  "version": "1.0.0",
+  "description": "A cutting-edge decentralized savings platform on Somnia Network",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network somnia-testnet",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "node": "hardhat node",
+    "verify": "hardhat verify"
+  },
+  "keywords": [
+    "defi",
+    "savings",
+    "somnia",
+    "web3",
+    "ethereum",
+    "yield-farming",
+    "vault"
+  ],
+  "author": "FluidVault Team",
+  "license": "MIT",
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^1.3.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "ethers": "^6.8.0",
+    "lucide-react": "^0.542.0",
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "recharts": "^2.8.0",
+    "viem": "^1.19.0",
+    "wagmi": "^1.4.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^20.19.13",
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.21",
+    "dotenv": "^16.3.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "hardhat": "^2.19.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2"
+  }
+}
