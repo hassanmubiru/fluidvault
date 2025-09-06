@@ -116,7 +116,7 @@ a {
 
 /* Custom button styles */
 .btn-primary {
-  @apply bg-gradient-to-r from-primary-500 to-somnia-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-somnia-600 transition-all duration-200 shadow-lg hover:shadow-xl;
+  @apply bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-xl;
 }
 
 .btn-secondary {
@@ -142,7 +142,7 @@ a {
 
 /* Input styles */
 .input {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
 }
 
 .input-error {
@@ -151,7 +151,7 @@ a {
 
 /* Loading spinner */
 .spinner {
-  @apply w-5 h-5 border-2 border-gray-300 border-t-primary-500 rounded-full animate-spin;
+  @apply w-5 h-5 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin;
 }
 
 /* Status indicators */
@@ -186,7 +186,7 @@ a {
 
 /* Custom focus styles */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
 }
 
 /* Hover effects */

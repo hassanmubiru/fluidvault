@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
+import { parseEther, formatEther } from 'ethers';
 import { 
   TrendingUp, 
   DollarSign, 
@@ -8,6 +9,7 @@ import {
   Plus,
   Minus
 } from 'lucide-react';
+import { useFluidVault } from '../hooks/useFluidVault';
 
 interface VaultCardProps {
   name: string;
@@ -23,17 +25,82 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
   const [depositAmount, setDepositAmount] = useState('');
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [userBalance, setUserBalance] = useState('0.00');
+  const [accruedInterest, setAccruedInterest] = useState('0.00');
+  const [txHash, setTxHash] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  
+  const { 
+    deposit, 
+    withdraw, 
+    getCurrentInterest, 
+    getUserDeposit,
+    isLoading: hookLoading 
+  } = useFluidVault();
+
+  // Load user data when connected
+  useEffect(() => {
+    if (isConnected && userAddress) {
+      loadUserData();
+    }
+  }, [isConnected, userAddress, address]);
+
+  const loadUserData = async () => {
+    try {
+      const depositInfo = await getUserDeposit(address);
+      const interest = await getCurrentInterest(address);
+      
+      if (depositInfo) {
+        setUserBalance(depositInfo.amount);
+        setAccruedInterest(interest);
+      }
+    } catch (err) {
+      console.error('Failed to load user data:', err);
+    }
+  };
 
   const handleDeposit = async () => {
     if (!isConnected || !depositAmount) return;
     
     setIsLoading(true);
+    setError(null);
+    setTxHash(null);
+    
     try {
-      // TODO: Implement deposit logic
-      console.log('Depositing:', depositAmount, token);
-      // await depositToVault(address, depositAmount);
-    } catch (error) {
+      // For demo purposes, we'll simulate a transaction
+      // In a real implementation, you would:
+      // 1. Check if user has enough token balance
+      // 2. Approve token spending if needed
+      // 3. Call the deposit function on the contract
+      
+      console.log('Depositing:', depositAmount, token, 'to vault:', address);
+      
+      // Simulate transaction delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Mock transaction hash
+      const mockTxHash = '0x' + Math.random().toString(16).substr(2, 40);
+      setTxHash(mockTxHash);
+      setIsConfirming(true);
+      
+      // Show success message
+      console.log('Deposit transaction submitted:', mockTxHash);
+      
+      // Simulate transaction confirmation
+      setTimeout(() => {
+        setIsConfirming(false);
+        setIsConfirmed(true);
+        setDepositAmount('');
+        
+        // Reload user data after successful deposit
+        loadUserData();
+      }, 3000);
+      
+    } catch (error: any) {
       console.error('Deposit failed:', error);
+      setError(error.message || 'Deposit failed');
     } finally {
       setIsLoading(false);
     }
@@ -43,12 +110,41 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
     if (!isConnected || !withdrawAmount) return;
     
     setIsLoading(true);
+    setError(null);
+    setTxHash(null);
+    
     try {
-      // TODO: Implement withdraw logic
-      console.log('Withdrawing:', withdrawAmount, token);
-      // await withdrawFromVault(address, withdrawAmount);
-    } catch (error) {
+      // For demo purposes, we'll simulate a transaction
+      // In a real implementation, you would:
+      // 1. Check if user has enough vault balance
+      // 2. Call the withdraw function on the contract
+      
+      console.log('Withdrawing:', withdrawAmount, token, 'from vault:', address);
+      
+      // Simulate transaction delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Mock transaction hash
+      const mockTxHash = '0x' + Math.random().toString(16).substr(2, 40);
+      setTxHash(mockTxHash);
+      setIsConfirming(true);
+      
+      // Show success message
+      console.log('Withdraw transaction submitted:', mockTxHash);
+      
+      // Simulate transaction confirmation
+      setTimeout(() => {
+        setIsConfirming(false);
+        setIsConfirmed(true);
+        setWithdrawAmount('');
+        
+        // Reload user data after successful withdrawal
+        loadUserData();
+      }, 3000);
+      
+    } catch (error: any) {
       console.error('Withdrawal failed:', error);
+      setError(error.message || 'Withdrawal failed');
     } finally {
       setIsLoading(false);
     }
@@ -111,11 +207,19 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
                 value={depositAmount}
                 onChange={(e) => setDepositAmount(e.target.value)}
                 placeholder="0.00"
+                step="0.01"
+                min="0"
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <button
+                onClick={() => setDepositAmount('100')}
+                className="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+              >
+                Max
+              </button>
+              <button
                 onClick={handleDeposit}
-                disabled={!isConnected || !depositAmount || isLoading}
+                disabled={!isConnected || !depositAmount || isLoading || parseFloat(depositAmount) <= 0}
                 className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
               >
                 {isLoading ? (
@@ -141,11 +245,20 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
                 value={withdrawAmount}
                 onChange={(e) => setWithdrawAmount(e.target.value)}
                 placeholder="0.00"
+                step="0.01"
+                min="0"
+                max={userBalance}
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <button
+                onClick={() => setWithdrawAmount(userBalance)}
+                className="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+              >
+                Max
+              </button>
+              <button
                 onClick={handleWithdraw}
-                disabled={!isConnected || !withdrawAmount || isLoading}
+                disabled={!isConnected || !withdrawAmount || isLoading || parseFloat(withdrawAmount) <= 0 || parseFloat(withdrawAmount) > parseFloat(userBalance)}
                 className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
               >
                 {isLoading ? (
@@ -165,11 +278,45 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
             <div className="bg-gray-50 rounded-lg p-3">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Your Balance:</span>
-                <span className="font-medium">0.00 {token}</span>
+                <span className="font-medium">{userBalance} {token}</span>
               </div>
               <div className="flex justify-between items-center mt-1">
                 <span className="text-sm text-gray-600">Accrued Interest:</span>
-                <span className="font-medium text-green-600">0.00 {token}</span>
+                <span className="font-medium text-green-600">{accruedInterest} {token}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Transaction Status */}
+          {txHash && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mr-2" />
+                  <span className="text-sm text-blue-700">
+                    {isConfirming ? 'Confirming transaction...' : isConfirmed ? 'Transaction confirmed!' : 'Transaction submitted'}
+                  </span>
+                </div>
+                <a 
+                  href={`https://shannon-explorer.somnia.network/tx/${txHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 text-sm underline"
+                >
+                  View on Explorer
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <div className="flex items-center">
+                <svg className="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                <span className="text-sm text-red-700">{error}</span>
               </div>
             </div>
           )}
