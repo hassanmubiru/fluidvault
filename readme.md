@@ -9,7 +9,7 @@
 
 ## 🌟 Overview
 
-FluidVault is a revolutionary decentralized savings platform that harnesses Somnia Network's high TPS (over 1 million transactions per second) and sub-second transaction finality to enable real-time interest accrual and instant withdrawals. Built with EVM compatibility, it seamlessly integrates with existing DeFi protocols and tooling.
+
 
 ## ✨ Key Features
 

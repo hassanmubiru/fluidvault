@@ -121,9 +121,12 @@ INTEREST_CALCULATOR_ADDRESS=${interestCalculator.address}
 GOVERNANCE_ADDRESS=${governance.address}
 
 # Network Configuration
-NEXT_PUBLIC_SOMNIA_RPC_URL=${hre.network.config.url || "https://testnet-rpc.somnia.network"}
-NEXT_PUBLIC_SOMNIA_CHAIN_ID=${hre.network.config.chainId || 1946}
+NEXT_PUBLIC_SOMNIA_RPC_URL=${hre.network.config.url || "https://dream-rpc.somnia.network/"}
+NEXT_PUBLIC_SOMNIA_CHAIN_ID=${hre.network.config.chainId || 50312}
 NEXT_PUBLIC_CONTRACT_ADDRESS=${fluidVault.address}
+
+# WalletConnect Configuration
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=demo-project-id
 `;
 
   const envFile = path.join(__dirname, "..", ".env.local");
