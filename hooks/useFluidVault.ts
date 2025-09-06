@@ -30,15 +30,27 @@ export function useFluidVault() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  // Contract write hooks for real transactions
-  const { writeAsync: writeDeposit, isLoading: isDepositLoading } = useContractWrite({
+  // Contract write hooks for real transactions (only when contract address is available)
+  const depositConfig = contractAddress ? {
     address: contractAddress as `0x${string}`,
+    abi: FLUID_VAULT_ABI,
+    functionName: 'deposit' as const,
+  } : null;
+  
+  const withdrawConfig = contractAddress ? {
+    address: contractAddress as `0x${string}`,
+    abi: FLUID_VAULT_ABI,
+    functionName: 'withdraw' as const,
+  } : null;
+  
+  const { writeAsync: writeDeposit, isLoading: isDepositLoading } = useContractWrite(depositConfig || {
+    address: '0x0000000000000000000000000000000000000000' as `0x${string}`,
     abi: FLUID_VAULT_ABI,
     functionName: 'deposit',
   });
   
-  const { writeAsync: writeWithdraw, isLoading: isWithdrawLoading } = useContractWrite({
-    address: contractAddress as `0x${string}`,
+  const { writeAsync: writeWithdraw, isLoading: isWithdrawLoading } = useContractWrite(withdrawConfig || {
+    address: '0x0000000000000000000000000000000000000000' as `0x${string}`,
     abi: FLUID_VAULT_ABI,
     functionName: 'withdraw',
   });
