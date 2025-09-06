@@ -17,8 +17,8 @@ module.exports = {
       chainId: 1337,
     },
     "somnia-testnet": {
-      url: "https://testnet-rpc.somnia.network",
-      chainId: 1946,
+      url: "https://dream-rpc.somnia.network/",
+      chainId: 50312,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       gasPrice: 1000000000, // 1 gwei
     },
@@ -34,10 +34,10 @@ module.exports = {
     customChains: [
       {
         network: "somnia-testnet",
-        chainId: 1946,
+        chainId: 50312,
         urls: {
-          apiURL: "https://testnet-explorer.somnia.network/api",
-          browserURL: "https://testnet-explorer.somnia.network",
+          apiURL: "https://shannon-explorer.somnia.network/api",
+          browserURL: "https://shannon-explorer.somnia.network",
         },
       },
     ],
