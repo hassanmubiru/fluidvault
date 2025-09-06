@@ -14,10 +14,10 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Deploying with account:", deployer.address);
   
-  const balance = await deployer.getBalance();
-  console.log("Account balance:", ethers.utils.formatEther(balance), "STT");
+  const balance = await deployer.provider.getBalance(deployer.address);
+  console.log("Account balance:", ethers.formatEther(balance), "STT");
   
-  if (balance.lt(ethers.utils.parseEther("0.1"))) {
+  if (balance < ethers.parseEther("0.1")) {
     console.warn("⚠️  Low balance! You may need more STT tokens for gas fees.");
     console.log("Get test tokens from Somnia Discord: https://discord.gg/somnia");
   }
@@ -27,26 +27,26 @@ async function main() {
     console.log("\n📊 Deploying InterestCalculator...");
     const InterestCalculator = await ethers.getContractFactory("InterestCalculator");
     const interestCalculator = await InterestCalculator.deploy();
-    await interestCalculator.deployed();
-    console.log("✅ InterestCalculator deployed to:", interestCalculator.address);
+    await interestCalculator.waitForDeployment();
+    console.log("✅ InterestCalculator deployed to:", await interestCalculator.getAddress());
 
     // Deploy Governance
     console.log("\n🗳️ Deploying Governance...");
     const Governance = await ethers.getContractFactory("Governance");
     const governance = await Governance.deploy();
-    await governance.deployed();
-    console.log("✅ Governance deployed to:", governance.address);
+    await governance.waitForDeployment();
+    console.log("✅ Governance deployed to:", await governance.getAddress());
 
     // Deploy FluidVault
     console.log("\n🏦 Deploying FluidVault...");
     const FluidVault = await ethers.getContractFactory("FluidVault");
     const fluidVault = await FluidVault.deploy(
-      interestCalculator.address,
-      governance.address,
+      await interestCalculator.getAddress(),
+      await governance.getAddress(),
       deployer.address // Fee recipient
     );
-    await fluidVault.deployed();
-    console.log("✅ FluidVault deployed to:", fluidVault.address);
+    await fluidVault.waitForDeployment();
+    console.log("✅ FluidVault deployed to:", await fluidVault.getAddress());
 
     // Create initial vaults
     console.log("\n💰 Creating initial vaults...");
@@ -80,12 +80,12 @@ async function main() {
     // Display results
     console.log("\n🎉 Deployment completed successfully!");
     console.log("\n📋 Contract Addresses:");
-    console.log(`FluidVault: ${fluidVault.address}`);
-    console.log(`InterestCalculator: ${interestCalculator.address}`);
-    console.log(`Governance: ${governance.address}`);
+    console.log(`FluidVault: ${await fluidVault.getAddress()}`);
+    console.log(`InterestCalculator: ${await interestCalculator.getAddress()}`);
+    console.log(`Governance: ${await governance.getAddress()}`);
     
     console.log("\n🔗 Block Explorer:");
-    console.log(`https://shannon-explorer.somnia.network/address/${fluidVault.address}`);
+    console.log(`https://shannon-explorer.somnia.network/address/${await fluidVault.getAddress()}`);
     
     console.log("\n📄 Next Steps:");
     console.log("1. Copy the contract addresses above");

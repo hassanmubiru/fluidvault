@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAccount, usePublicClient } from 'wagmi';
+import { useAccount, usePublicClient, useContractWrite, useWaitForTransaction } from 'wagmi';
 import { ethers, formatEther, parseEther } from 'ethers';
 
 // Contract ABI (simplified for demo)
@@ -29,6 +29,19 @@ export function useFluidVault() {
   const [contractAddress, setContractAddress] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Contract write hooks for real transactions
+  const { writeAsync: writeDeposit, isLoading: isDepositLoading } = useContractWrite({
+    address: contractAddress as `0x${string}`,
+    abi: FLUID_VAULT_ABI,
+    functionName: 'deposit',
+  });
+  
+  const { writeAsync: writeWithdraw, isLoading: isWithdrawLoading } = useContractWrite({
+    address: contractAddress as `0x${string}`,
+    abi: FLUID_VAULT_ABI,
+    functionName: 'withdraw',
+  });
 
   // Get contract address from environment
   useEffect(() => {
@@ -38,7 +51,7 @@ export function useFluidVault() {
     }
   }, []);
 
-  // Deposit function (simplified for demo)
+  // Deposit function with real contract interaction
   const deposit = async (tokenAddress: string, amount: string) => {
     if (!contractAddress || !isConnected) {
       throw new Error('Contract not available or wallet not connected');
@@ -48,18 +61,28 @@ export function useFluidVault() {
     setError(null);
 
     try {
-      // Mock implementation for demo
       console.log('Depositing', amount, 'to token', tokenAddress);
-      return '0x1234567890abcdef'; // Mock transaction hash
+      
+      // Convert amount to wei
+      const amountWei = parseEther(amount);
+      
+      // Call the real contract function
+      const tx = await writeDeposit({
+        args: [tokenAddress as `0x${string}`, amountWei],
+      });
+      
+      console.log('Deposit transaction submitted:', tx.hash);
+      return tx.hash;
     } catch (err: any) {
-      setError(err.message);
+      console.error('Deposit failed:', err);
+      setError(err.message || 'Deposit failed');
       throw err;
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Withdraw function (simplified for demo)
+  // Withdraw function with real contract interaction
   const withdraw = async (tokenAddress: string, amount: string) => {
     if (!contractAddress || !isConnected) {
       throw new Error('Contract not available or wallet not connected');
@@ -69,11 +92,21 @@ export function useFluidVault() {
     setError(null);
 
     try {
-      // Mock implementation for demo
       console.log('Withdrawing', amount, 'from token', tokenAddress);
-      return '0x1234567890abcdef'; // Mock transaction hash
+      
+      // Convert amount to wei
+      const amountWei = parseEther(amount);
+      
+      // Call the real contract function
+      const tx = await writeWithdraw({
+        args: [tokenAddress as `0x${string}`, amountWei],
+      });
+      
+      console.log('Withdraw transaction submitted:', tx.hash);
+      return tx.hash;
     } catch (err: any) {
-      setError(err.message);
+      console.error('Withdraw failed:', err);
+      setError(err.message || 'Withdraw failed');
       throw err;
     } finally {
       setIsLoading(false);
@@ -257,10 +290,14 @@ export function useFluidVault() {
 
   return {
     // State
-    isLoading,
+    isLoading: isLoading || isDepositLoading || isWithdrawLoading,
     error,
     contractAddress,
     isConnected,
+    
+    // Transaction states
+    isDepositLoading,
+    isWithdrawLoading,
     
     // Client
     publicClient,

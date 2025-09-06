@@ -72,22 +72,48 @@ contract InterestCalculator {
     }
     
     /**
+     * @dev Internal function to calculate simple interest
+     * @param principal Principal amount
+     * @param annualRate Annual interest rate in basis points
+     * @param timeElapsed Time elapsed in seconds
+     * @return Interest amount
+     */
+    function _calculateSimpleInterest(
+        uint256 principal,
+        uint256 annualRate,
+        uint256 timeElapsed
+    ) internal pure returns (uint256) {
+        require(annualRate <= MAX_RATE, "InterestCalculator: Rate too high");
+        require(principal > 0, "InterestCalculator: Invalid principal");
+        
+        if (timeElapsed == 0) {
+            return 0;
+        }
+        
+        // Simple interest calculation: I = P * R * T
+        uint256 ratePerSecond = (annualRate * BASIS_POINTS) / (BASIS_POINTS * SECONDS_PER_YEAR);
+        uint256 interest = (principal * ratePerSecond * timeElapsed) / (BASIS_POINTS * BASIS_POINTS);
+        
+        return interest;
+    }
+    
+    /**
      * @dev Calculate compound interest with configurable frequency
      * @param principal Principal amount
      * @param annualRate Annual interest rate in basis points
      * @param timeElapsed Time elapsed in seconds
-     * @param compoundFrequency Frequency of compounding in seconds
+     * @param compoundFreq Frequency of compounding in seconds
      * @return Interest amount
      */
     function calculateCompoundInterest(
         uint256 principal,
         uint256 annualRate,
         uint256 timeElapsed,
-        uint256 compoundFrequency
+        uint256 compoundFreq
     ) external pure returns (uint256) {
         require(annualRate <= MAX_RATE, "InterestCalculator: Rate too high");
         require(principal > 0, "InterestCalculator: Invalid principal");
-        require(compoundFrequency > 0, "InterestCalculator: Invalid frequency");
+        require(compoundFreq > 0, "InterestCalculator: Invalid frequency");
         
         if (timeElapsed == 0) {
             return 0;
@@ -96,13 +122,13 @@ contract InterestCalculator {
         // Compound interest: A = P * (1 + r/n)^(n*t)
         // Where P = principal, r = annual rate, n = compounding frequency, t = time
         
-        uint256 periods = timeElapsed / compoundFrequency;
+        uint256 periods = timeElapsed / compoundFreq;
         if (periods == 0) {
             // If less than one compounding period, use simple interest
-            return this.calculateInterest(principal, annualRate, timeElapsed);
+            return _calculateSimpleInterest(principal, annualRate, timeElapsed);
         }
         
-        uint256 ratePerPeriod = (annualRate * compoundFrequency) / (BASIS_POINTS * SECONDS_PER_YEAR);
+        uint256 ratePerPeriod = (annualRate * compoundFreq) / (BASIS_POINTS * SECONDS_PER_YEAR);
         uint256 compoundFactor = BASIS_POINTS + ratePerPeriod;
         
         // Calculate (1 + r/n)^(n*t) using binary exponentiation
@@ -150,7 +176,7 @@ contract InterestCalculator {
         }
         
         // For larger exponents, fall back to simple interest
-        return this.calculateInterest(principal, annualRate, timeElapsed);
+        return _calculateSimpleInterest(principal, annualRate, timeElapsed);
     }
     
     /**
@@ -175,7 +201,7 @@ contract InterestCalculator {
             require(rates[i] <= MAX_RATE, "InterestCalculator: Rate too high");
             
             if (timePeriods[i] > 0) {
-                uint256 periodInterest = this.calculateInterest(
+                uint256 periodInterest = _calculateSimpleInterest(
                     currentPrincipal,
                     rates[i],
                     timePeriods[i]
@@ -240,20 +266,20 @@ contract InterestCalculator {
     /**
      * @dev Calculate effective annual rate with compounding
      * @param nominalRate Nominal annual rate in basis points
-     * @param compoundFrequency Compounding frequency per year
+     * @param compoundFreq Compounding frequency per year
      * @return Effective annual rate in basis points
      */
     function calculateEffectiveRate(
         uint256 nominalRate,
-        uint256 compoundFrequency
+        uint256 compoundFreq
     ) external pure returns (uint256) {
         require(nominalRate <= MAX_RATE, "InterestCalculator: Rate too high");
-        require(compoundFrequency > 0, "InterestCalculator: Invalid frequency");
+        require(compoundFreq > 0, "InterestCalculator: Invalid frequency");
         
         // EAR = (1 + r/n)^n - 1
-        uint256 ratePerPeriod = nominalRate / compoundFrequency;
+        uint256 ratePerPeriod = nominalRate / compoundFreq;
         uint256 compoundFactor = BASIS_POINTS + ratePerPeriod;
-        uint256 exponentiatedFactor = _power(compoundFactor, compoundFrequency);
+        uint256 exponentiatedFactor = _power(compoundFactor, compoundFreq);
         
         return exponentiatedFactor - BASIS_POINTS;
     }
