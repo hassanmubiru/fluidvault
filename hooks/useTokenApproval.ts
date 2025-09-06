@@ -30,7 +30,7 @@ export function useTokenApproval() {
       // For now, we'll simulate the approval process
       // In a real implementation, you would use useContractWrite with the token address
       // This is a simplified version for demo purposes
-      const mockHash = '0x' + Math.random().toString(16).substr(2, 40);
+      const mockHash = '0x' + Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
       
       console.log('Approval transaction submitted:', mockHash);
       return mockHash;

@@ -80,7 +80,7 @@ export function useFluidVault() {
       
       // For now, we'll simulate the transaction since we need to handle the contract address properly
       // In a real implementation, you would call the contract function
-      const mockHash = '0x' + Math.random().toString(16).substr(2, 40);
+      const mockHash = '0x' + Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
       
       console.log('Deposit transaction submitted:', mockHash);
       return mockHash;
@@ -110,7 +110,7 @@ export function useFluidVault() {
       
       // For now, we'll simulate the transaction since we need to handle the contract address properly
       // In a real implementation, you would call the contract function
-      const mockHash = '0x' + Math.random().toString(16).substr(2, 40);
+      const mockHash = '0x' + Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
       
       console.log('Withdraw transaction submitted:', mockHash);
       return mockHash;
