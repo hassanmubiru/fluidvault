@@ -8,11 +8,15 @@ async function main() {
   
   // Check if we're on the right network
   const network = await ethers.provider.getNetwork();
-  if (network.chainId !== 50312) {
+  console.log(`🌐 Connected to network: ${network.name} (Chain ID: ${network.chainId})`);
+  
+  if (network.chainId !== 50312n) {
     console.error("❌ Error: This script is designed for Somnia testnet (Chain ID: 50312)");
     console.error(`Current network: ${network.name} (Chain ID: ${network.chainId})`);
     process.exit(1);
   }
+  
+  console.log("✅ Connected to Somnia testnet successfully!");
 
   // Get the deployer account
   const [deployer] = await ethers.getSigners();
