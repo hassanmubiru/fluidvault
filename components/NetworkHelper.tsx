@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { useAccount, useSwitchNetwork } from 'wagmi';
+import { useAccount, useSwitchNetwork, useChainId } from 'wagmi';
 
 export default function NetworkHelper() {
-  const { chain } = useAccount();
+  const { isConnected } = useAccount();
+  const chainId = useChainId();
   const { switchNetwork } = useSwitchNetwork();
   const [showInstructions, setShowInstructions] = useState(false);
 
-  const isSomniaTestnet = chain?.id === 50312;
-  const isUnsupportedNetwork = chain && ![1, 11155111, 31337, 50312].includes(chain.id);
+  const isSomniaTestnet = chainId === 50312;
+  const isUnsupportedNetwork = isConnected && ![1, 11155111, 31337, 50312].includes(chainId);
 
   if (isSomniaTestnet) {
     return (
