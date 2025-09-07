@@ -15,7 +15,6 @@ import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
 import NetworkHelper from '../components/NetworkHelper';
 import TransactionLookup from '../components/TransactionLookup';
-import DeploymentGuide from '../components/DeploymentGuide';
 
 export default function Home() {
   const [totalTVL, setTotalTVL] = useState('4.5M');
@@ -207,10 +206,6 @@ export default function Home() {
                 </p>
               </div>
               
-              {/* Deployment Guide */}
-              <div className="mb-8">
-                <DeploymentGuide />
-              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <VaultCard
