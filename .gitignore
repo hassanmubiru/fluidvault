@@ -81,3 +81,4 @@ storybook-static/
 # Temporary files
 *.tmp
 *.temp
+.vercel
