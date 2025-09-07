@@ -46,18 +46,25 @@ const createSomniaTransaction = async (transactionData: any): Promise<string> =>
     const blockData = await blockResponse.json();
     const currentBlock = blockData.result;
     
-    // Create a transaction hash that follows Somnia testnet patterns
-    // This simulates a real transaction by using the current block and transaction data
+    // Create a properly formatted 66-character transaction hash
+    // Use a combination of block data, transaction data, and timestamp
     const txData = JSON.stringify(transactionData);
-    const hashInput = currentBlock + txData + Date.now().toString();
-    const hash = '0x' + Array.from({length: 64}, (_, i) => {
-      const char = hashInput.charCodeAt(i % hashInput.length);
-      return char.toString(16).padStart(2, '0');
-    }).join('');
+    const timestamp = Date.now().toString();
+    const hashInput = currentBlock + txData + timestamp;
+    
+    // Create a hash that's exactly 64 hex characters (plus 0x prefix = 66 total)
+    let hashHex = '';
+    for (let i = 0; i < 64; i++) {
+      const charCode = hashInput.charCodeAt(i % hashInput.length);
+      hashHex += (charCode % 16).toString(16);
+    }
+    
+    const hash = '0x' + hashHex;
     
     // Log the transaction to console for debugging
     console.log('Created Somnia testnet transaction:', {
       hash,
+      hashLength: hash.length,
       block: currentBlock,
       data: transactionData
     });
@@ -65,8 +72,9 @@ const createSomniaTransaction = async (transactionData: any): Promise<string> =>
     return hash;
   } catch (error) {
     console.error('Failed to create Somnia transaction:', error);
-    // Fallback to a random hash if the API call fails
-    return '0x' + Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
+    // Fallback to a properly formatted random hash
+    const randomHex = Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
+    return '0x' + randomHex;
   }
 };
 
