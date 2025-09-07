@@ -22,10 +22,10 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log(`📝 Deploying with account: ${deployer.address}`);
   
-  const balance = await deployer.getBalance();
-  console.log(`💰 Account balance: ${ethers.utils.formatEther(balance)} STT`);
+  const balance = await ethers.provider.getBalance(deployer.address);
+  console.log(`💰 Account balance: ${ethers.formatEther(balance)} STT`);
   
-  if (balance.lt(ethers.utils.parseEther("0.1"))) {
+  if (balance < ethers.parseEther("0.1")) {
     console.warn("⚠️  Warning: Low balance. You may need more STT for gas fees.");
   }
 
