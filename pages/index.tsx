@@ -11,6 +11,7 @@ import {
   CheckCircle,
   ExternalLink
 } from 'lucide-react';
+import VaultCard from '../components/VaultCard';
 import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
 import NetworkHelper from '../components/NetworkHelper';
