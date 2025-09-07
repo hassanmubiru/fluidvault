@@ -16,6 +16,7 @@
     "deploy:simple": "hardhat run scripts/simple-deploy.js --network somnia-testnet",
     "deploy:test": "hardhat run scripts/test-deploy.js --network somnia-testnet",
     "test:deploy": "hardhat run scripts/test-deployment.js --network somnia-testnet",
+    "deploy:check": "hardhat run scripts/deploy-without-key.js --network somnia-testnet",
     "deploy:local": "hardhat run scripts/deploy.js --network localhost",
     "node": "hardhat node",
     "verify": "hardhat verify"
