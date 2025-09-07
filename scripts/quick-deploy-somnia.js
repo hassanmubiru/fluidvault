@@ -35,26 +35,26 @@ async function main() {
   console.log("1️⃣  Deploying InterestCalculator...");
   const InterestCalculator = await ethers.getContractFactory("InterestCalculator");
   const interestCalculator = await InterestCalculator.deploy();
-  await interestCalculator.deployed();
-  console.log(`   ✅ InterestCalculator: ${interestCalculator.address}`);
+  await interestCalculator.waitForDeployment();
+  console.log(`   ✅ InterestCalculator: ${await interestCalculator.getAddress()}`);
 
   // Deploy Governance
   console.log("2️⃣  Deploying Governance...");
   const Governance = await ethers.getContractFactory("Governance");
   const governance = await Governance.deploy();
-  await governance.deployed();
-  console.log(`   ✅ Governance: ${governance.address}`);
+  await governance.waitForDeployment();
+  console.log(`   ✅ Governance: ${await governance.getAddress()}`);
 
   // Deploy FluidVault
   console.log("3️⃣  Deploying FluidVault...");
   const FluidVault = await ethers.getContractFactory("FluidVault");
   const fluidVault = await FluidVault.deploy(
-    interestCalculator.address,
-    governance.address,
+    await interestCalculator.getAddress(),
+    await governance.getAddress(),
     deployer.address // Fee recipient
   );
-  await fluidVault.deployed();
-  console.log(`   ✅ FluidVault: ${fluidVault.address}`);
+  await fluidVault.waitForDeployment();
+  console.log(`   ✅ FluidVault: ${await fluidVault.getAddress()}`);
 
   // Create initial vaults with real Somnia testnet addresses
   console.log("\n💰 Creating initial vaults...");
