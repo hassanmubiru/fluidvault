@@ -202,30 +202,58 @@ export default function Home() {
                   Available Vaults
                 </h2>
                 <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  Choose from our selection of high-yield savings vaults
+                  Choose from our selection of high-yield savings vaults on Somnia Network
                 </p>
               </div>
+              
+              {/* Deployment Status Notice */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">ℹ</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-blue-800 ml-3">Smart Contracts Not Deployed Yet</h3>
+                </div>
+                <p className="text-blue-700 text-center mb-4">
+                  The FluidVault smart contracts need to be deployed to Somnia testnet before you can interact with the vaults.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button 
+                    onClick={() => window.open('https://github.com/your-username/fluidvault/blob/main/DEPLOYMENT_GUIDE.md', '_blank')}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    View Deployment Guide
+                  </button>
+                  <button 
+                    onClick={() => window.open('https://github.com/your-username/fluidvault', '_blank')}
+                    className="border border-blue-600 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+                  >
+                    View on GitHub
+                  </button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <VaultCard
                   name="USDC Vault"
                   apy={5.0}
                   tvl="$2.5M"
                   token="USDC"
-                  address="0x1234567890123456789012345678901234567890"
+                  address="0x0000000000000000000000000000000000000000"
                 />
                 <VaultCard
                   name="USDT Vault"
                   apy={4.5}
                   tvl="$1.8M"
                   token="USDT"
-                  address="0x2345678901234567890123456789012345678901"
+                  address="0x0000000000000000000000000000000000000000"
                 />
                 <VaultCard
                   name="DAI Vault"
                   apy={4.0}
                   tvl="$1.2M"
                   token="DAI"
-                  address="0x3456789012345678901234567890123456789012"
+                  address="0x0000000000000000000000000000000000000000"
                 />
               </div>
             </div>

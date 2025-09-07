@@ -233,7 +233,7 @@ export default function TransactionLookup({ className = '' }: TransactionLookupP
               <div className="font-mono text-xs text-green-800 break-all mb-1">
                 0xd14546ac7e5e0156e3dc66bf31f0fd81aef17700791fa0195dbc6252ddc35ee2
               </div>
-              <div className="text-xs text-green-600 mb-1">✅ Verified working transaction</div>
+              <div className="text-xs text-green-600 mb-1">✅ Recent transaction (Block 0xa1f7720)</div>
               <button
                 onClick={() => setTxHash('0xd14546ac7e5e0156e3dc66bf31f0fd81aef17700791fa0195dbc6252ddc35ee2')}
                 className="text-xs text-green-600 hover:text-green-800 underline"
@@ -246,7 +246,7 @@ export default function TransactionLookup({ className = '' }: TransactionLookupP
               <div className="font-mono text-xs text-green-800 break-all mb-1">
                 0x4a35bc7791fe8106ff0d0141a68ecb4b95786289b8c6931b8b5f00c64ed5d191
               </div>
-              <div className="text-xs text-green-600 mb-1">✅ Verified working transaction</div>
+              <div className="text-xs text-green-600 mb-1">✅ Recent transaction (Block 0xa1f7720)</div>
               <button
                 onClick={() => setTxHash('0x4a35bc7791fe8106ff0d0141a68ecb4b95786289b8c6931b8b5f00c64ed5d191')}
                 className="text-xs text-green-600 hover:text-green-800 underline"
@@ -259,9 +259,35 @@ export default function TransactionLookup({ className = '' }: TransactionLookupP
               <div className="font-mono text-xs text-green-800 break-all mb-1">
                 0x380784dc566e0224f36ba077d197a3a6f29b40034f13fc6375e911d94586fdc3
               </div>
-              <div className="text-xs text-green-600 mb-1">✅ Verified working transaction</div>
+              <div className="text-xs text-green-600 mb-1">✅ Recent transaction (Block 0xa1f771e)</div>
               <button
                 onClick={() => setTxHash('0x380784dc566e0224f36ba077d197a3a6f29b40034f13fc6375e911d94586fdc3')}
+                className="text-xs text-green-600 hover:text-green-800 underline"
+              >
+                Use this hash
+              </button>
+            </div>
+            
+            <div className="bg-white border border-green-200 rounded p-2">
+              <div className="font-mono text-xs text-green-800 break-all mb-1">
+                0x632ea196cb3d061844f96e2f796609b53db03bbfae72aa43dbe21de432e68bcc
+              </div>
+              <div className="text-xs text-green-600 mb-1">✅ Recent transaction (Block 0xa1f771d)</div>
+              <button
+                onClick={() => setTxHash('0x632ea196cb3d061844f96e2f796609b53db03bbfae72aa43dbe21de432e68bcc')}
+                className="text-xs text-green-600 hover:text-green-800 underline"
+              >
+                Use this hash
+              </button>
+            </div>
+            
+            <div className="bg-white border border-green-200 rounded p-2">
+              <div className="font-mono text-xs text-green-800 break-all mb-1">
+                0x35a87cbf0291f352c001cbb2d28fa90dfd312707d71e4d902cb73df4dbb7a7c3
+              </div>
+              <div className="text-xs text-green-600 mb-1">✅ Recent transaction (Block 0xa1f7719)</div>
+              <button
+                onClick={() => setTxHash('0x35a87cbf0291f352c001cbb2d28fa90dfd312707d71e4d902cb73df4dbb7a7c3')}
                 className="text-xs text-green-600 hover:text-green-800 underline"
               >
                 Use this hash
@@ -271,8 +297,8 @@ export default function TransactionLookup({ className = '' }: TransactionLookupP
           
           <div className="mt-3 p-2 bg-green-100 rounded border border-green-300">
             <p className="text-xs text-green-800">
-              <strong>Note:</strong> All three hashes above are real, verified transactions from Somnia testnet. 
-              They have been tested and confirmed to work with the lookup tool.
+              <strong>Note:</strong> All five hashes above are real, recent transactions from Somnia testnet. 
+              They have been verified and confirmed to work with the lookup tool. Each shows the block number where the transaction was mined.
             </p>
           </div>
         </div>
