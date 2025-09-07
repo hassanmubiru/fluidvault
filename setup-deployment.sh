@@ -1,53 +1,37 @@
 #!/bin/bash
 
-echo "🚀 FluidVault Somnia Testnet Deployment Setup"
-echo "=============================================="
+echo "🚀 FluidVault Deployment Setup"
+echo "==============================="
+echo ""
 
-# Check if .env.local exists
-if [ ! -f ".env.local" ]; then
-    echo "📄 Creating .env.local from template..."
-    cp env.example .env.local
-    echo "✅ .env.local created!"
-    echo ""
-    echo "⚠️  IMPORTANT: Please edit .env.local and add your:"
-    echo "   - PRIVATE_KEY (without 0x prefix)"
-    echo "   - WALLETCONNECT_PROJECT_ID (optional)"
-    echo ""
-    echo "Press Enter when you've updated .env.local..."
-    read
+# Check if .env file exists
+if [ ! -f ".env" ]; then
+    echo "📄 Creating .env file..."
+    cp .env.template .env
+    echo "✅ .env file created"
 else
-    echo "✅ .env.local already exists"
-fi
-
-# Check if private key is set
-if ! grep -q "PRIVATE_KEY=your_private_key_here" .env.local; then
-    echo "✅ Private key appears to be configured"
-else
-    echo "❌ Please set your PRIVATE_KEY in .env.local"
-    echo "   Example: PRIVATE_KEY=1234567890abcdef..."
-    exit 1
+    echo "📄 .env file already exists"
 fi
 
 echo ""
-echo "🔧 Installing dependencies..."
-npm install
-
+echo "🔧 Next Steps:"
+echo "1. Edit .env file and add your private key:"
+echo "   nano .env"
 echo ""
-echo "📦 Compiling smart contracts..."
-npm run compile
-
+echo "2. Replace this line:"
+echo "   PRIVATE_KEY=your_private_key_here"
 echo ""
-echo "🧪 Running tests..."
-npm run test
-
+echo "3. With your actual private key:"
+echo "   PRIVATE_KEY=0x1234567890abcdef..."
 echo ""
-echo "🎯 Ready for deployment!"
+echo "4. Get STT tokens from Somnia testnet faucet"
 echo ""
-echo "To deploy to Somnia testnet, run:"
-echo "  npm run deploy:quick"
+echo "5. Test deployment:"
+echo "   npm run test:deploy"
 echo ""
-echo "Or for full deployment with file generation:"
-echo "  npm run deploy:testnet"
+echo "6. Deploy contracts:"
+echo "   npm run deploy:simple"
 echo ""
-echo "Make sure you have STT tokens for gas fees!"
-echo "Get them from: https://discord.gg/somnia"
+echo "📚 For detailed instructions, see DEPLOYMENT_SETUP.md"
+echo ""
+echo "⚠️  Security: Never share your private key!"
