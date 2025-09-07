@@ -1,248 +1,183 @@
-# 🚀 FluidVault Somnia Testnet Deployment Guide
+# 🚀 FluidVault Deployment Guide
 
-This guide will walk you through deploying FluidVault smart contracts to the Somnia testnet and connecting your frontend application.
+This guide will walk you through deploying the FluidVault smart contracts to Somnia testnet and updating the frontend to use real contract interactions.
 
 ## 📋 Prerequisites
 
-Before starting the deployment, ensure you have:
+1. **Node.js** (v16 or higher)
+2. **npm** or **yarn**
+3. **Somnia Testnet STT tokens** for gas fees
+4. **Private key** with STT tokens for deployment
+5. **WalletConnect Project ID** (optional, for enhanced wallet support)
 
-1. **Node.js 18+** installed
-2. **npm** or **yarn** package manager
-3. **Git** for version control
-4. **MetaMask** or compatible wallet
-5. **Somnia testnet tokens** (STT) for gas fees
-6. **Private key** of your deployment wallet
+## 🔧 Environment Setup
 
-## 🔧 Setup Steps
-
-### 1. Environment Configuration
-
-Create your environment file:
-
-```bash
-cp env.example .env.local
-```
-
-Edit `.env.local` with your configuration:
-
-```env
-# Somnia Testnet Configuration
-PRIVATE_KEY=your_private_key_here_without_0x_prefix
-SOMNIA_RPC_URL=https://dream-rpc.somnia.network/
-SOMNIA_CHAIN_ID=50312
-
-# Contract Addresses (will be filled after deployment)
-FLUID_VAULT_ADDRESS=
-INTEREST_CALCULATOR_ADDRESS=
-GOVERNANCE_ADDRESS=
-
-# Frontend Configuration
-NEXT_PUBLIC_SOMNIA_RPC_URL=https://dream-rpc.somnia.network/
-NEXT_PUBLIC_SOMNIA_CHAIN_ID=50312
-NEXT_PUBLIC_CONTRACT_ADDRESS=
-
-# WalletConnect Configuration
-NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
-
-# API Keys (optional)
-SOMNIA_API_KEY=your_somnia_api_key_here
-ETHERSCAN_API_KEY=your_etherscan_api_key_here
-```
-
-### 2. Install Dependencies
-
+### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-### 3. Get Somnia Testnet Tokens
-
-You'll need STT (Somnia Test Token) for gas fees:
-
-1. **Add Somnia Testnet to MetaMask:**
-   - Network Name: `Somnia Testnet`
-   - RPC URL: `https://dream-rpc.somnia.network/`
-   - Chain ID: `50312`
-   - Currency Symbol: `STT`
-   - Block Explorer: `https://shannon-explorer.somnia.network/`
-
-2. **Get Test Tokens:**
-   - Join the [Somnia Discord](https://discord.gg/somnia)
-   - Request test tokens in the faucet channel
-   - Or use the official faucet if available
-
-### 4. Compile Smart Contracts
+### 2. Configure Environment Variables
+Create a `.env` file in the root directory:
 
 ```bash
-npm run compile
+# Private key for deployment (NEVER commit this to version control)
+PRIVATE_KEY=your_private_key_here
+
+# Somnia Testnet Configuration
+SOMNIA_RPC_URL=https://dream-rpc.somnia.network/
+SOMNIA_CHAIN_ID=50312
+
+# WalletConnect Configuration (optional)
+WALLETCONNECT_PROJECT_ID=your_project_id_here
+
+# Somnia API Key (for contract verification)
+SOMNIA_API_KEY=your_api_key_here
 ```
 
-This will compile all contracts and generate artifacts in the `artifacts/` directory.
+### 3. Get STT Tokens
+- Visit the Somnia testnet faucet to get STT tokens
+- Ensure your deployment account has at least 1 STT for gas fees
 
-### 5. Run Tests (Optional but Recommended)
+## 🏗️ Smart Contract Deployment
 
+### 1. Compile Contracts
 ```bash
-npm run test
+npx hardhat compile
 ```
 
-## 🚀 Deployment Process
-
-### Deploy to Somnia Testnet
-
+### 2. Deploy to Somnia Testnet
 ```bash
-npm run deploy:testnet
+npx hardhat run scripts/deploy.js --network somnia-testnet
 ```
 
-This command will:
+### 3. Verify Contracts (Optional)
+```bash
+npx hardhat verify --network somnia-testnet <CONTRACT_ADDRESS> <CONSTRUCTOR_ARGS>
+```
 
-1. **Deploy InterestCalculator contract**
-2. **Deploy Governance contract**
-3. **Deploy FluidVault contract**
-4. **Create initial vaults** for USDC, USDT, and DAI
-5. **Set up governance permissions**
-6. **Save deployment information** to `deployments/somnia-testnet.json`
-7. **Update .env.local** with contract addresses
+## 📄 Deployment Output
 
-### Expected Output
+After successful deployment, you'll get:
 
 ```
-🚀 Starting FluidVault deployment...
-Deploying contracts with account: 0x1234...5678
-Account balance: 1000000000000000000
-
-📊 Deploying InterestCalculator...
-InterestCalculator deployed to: 0xABC123...DEF456
-
-🗳️ Deploying Governance...
-Governance deployed to: 0xDEF456...GHI789
-
-🏦 Deploying FluidVault...
-FluidVault deployed to: 0xGHI789...JKL012
-
-💰 Creating initial vaults...
-Creating vault for USDC...
-✅ USDC vault created with 5% APY
-Creating vault for USDT...
-✅ USDT vault created with 4.5% APY
-Creating vault for DAI...
-✅ DAI vault created with 4% APY
-
-🔐 Setting up governance permissions...
-✅ Governance permissions set up
-
-📄 Deployment info saved to: deployments/somnia-testnet.json
-📄 Environment file created: .env.local
-
 🎉 Deployment completed successfully!
 
 📋 Contract Addresses:
-FluidVault: 0xGHI789...JKL012
-InterestCalculator: 0xABC123...DEF456
-Governance: 0xDEF456...GHI789
+FluidVault: 0x...
+InterestCalculator: 0x...
+Governance: 0x...
+
+📄 Deployment info saved to: deployments/somnia-testnet.json
+📄 Environment file created: .env.local
 ```
 
-## 🔍 Verification
+## 🔄 Frontend Integration
 
-### 1. Verify Contracts on Block Explorer
+### 1. Update Environment Variables
+The deployment script automatically creates a `.env.local` file with the contract addresses. If you need to update manually:
 
-Visit [Shannon Explorer](https://shannon-explorer.somnia.network/) and search for your contract addresses to verify they were deployed successfully.
+```bash
+# .env.local
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x... # FluidVault address
+NEXT_PUBLIC_INTEREST_CALCULATOR_ADDRESS=0x...
+NEXT_PUBLIC_GOVERNANCE_ADDRESS=0x...
+NEXT_PUBLIC_SOMNIA_RPC_URL=https://dream-rpc.somnia.network/
+NEXT_PUBLIC_SOMNIA_CHAIN_ID=50312
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
+```
 
-### 2. Test Frontend Connection
-
-Start your frontend application:
-
+### 2. Restart Development Server
 ```bash
 npm run dev
 ```
 
-Visit `http://localhost:3000` and:
+### 3. Test Contract Integration
+- Connect your wallet to Somnia testnet
+- Try depositing and withdrawing from vaults
+- Verify transactions on Shannon Explorer
 
-1. **Connect your wallet** using RainbowKit
-2. **Switch to Somnia testnet** using the NetworkHelper component
-3. **Test deposit/withdraw functionality** with the deployed contracts
+## 🧪 Testing
 
-### 3. Verify Contract Functions
-
-You can interact with your deployed contracts using:
-
-- **Block Explorer**: Direct contract interaction
-- **Frontend Application**: Full UI testing
-- **Hardhat Console**: Command-line interaction
-
+### 1. Run Contract Tests
 ```bash
-npx hardhat console --network somnia-testnet
+npx hardhat test
 ```
 
-## 📊 Post-Deployment Configuration
+### 2. Test Frontend Integration
+- Open http://localhost:3000
+- Connect wallet to Somnia testnet
+- Test deposit/withdraw functionality
+- Verify transactions on block explorer
 
-### 1. Update Frontend Configuration
+## 🔍 Verification
 
-After deployment, your `.env.local` file will be automatically updated with contract addresses. The frontend will use these addresses to interact with your deployed contracts.
+### 1. Check Contract Deployment
+Visit Shannon Explorer and search for your contract addresses:
+- https://shannon-explorer.somnia.network/
 
-### 2. Create Governance Proposals
+### 2. Verify Contract Functions
+- Check that vaults are created correctly
+- Verify governance permissions are set
+- Test interest calculation functions
 
-Use the deployed governance contract to:
+## 🚨 Troubleshooting
 
-- Update interest rates
-- Add new token vaults
-- Modify platform parameters
-- Manage access controls
+### Common Issues:
 
-### 3. Monitor Contract Activity
-
-Track your contracts using:
-
-- **Block Explorer**: Transaction history and contract interactions
-- **Event Logs**: Monitor deposits, withdrawals, and governance events
-- **Analytics**: Track TVL, user activity, and performance metrics
-
-## 🔧 Troubleshooting
-
-### Common Issues
-
-1. **Insufficient Gas Fees**
-   - Ensure you have enough STT tokens
+1. **Insufficient Gas**
+   - Ensure your account has enough STT tokens
    - Check gas price settings in hardhat.config.js
 
 2. **Network Connection Issues**
-   - Verify RPC URL is correct: `https://dream-rpc.somnia.network/`
-   - Check Chain ID: `50312`
+   - Verify RPC URL is correct
+   - Check network configuration
 
-3. **Contract Deployment Failures**
-   - Check private key format (no 0x prefix)
-   - Ensure sufficient account balance
-   - Verify contract compilation
+3. **Contract Verification Fails**
+   - Ensure constructor arguments are correct
+   - Check if Somnia API key is valid
 
-4. **Frontend Connection Issues**
-   - Update contract addresses in .env.local
-   - Restart development server
-   - Clear browser cache
+4. **Frontend Not Connecting**
+   - Verify contract addresses in .env.local
+   - Check network configuration in _app.tsx
+   - Ensure wallet is connected to Somnia testnet
 
-### Getting Help
+## 📊 Post-Deployment
 
-- **Discord**: Join [Somnia Discord](https://discord.gg/somnia) for support
-- **Documentation**: Check [Somnia Docs](https://docs.somnia.network/)
-- **GitHub Issues**: Report bugs in the repository
+### 1. Monitor Contract Activity
+- Set up monitoring for contract events
+- Track vault deposits and withdrawals
+- Monitor governance proposals
 
-## 📈 Next Steps
+### 2. Update Documentation
+- Update contract addresses in documentation
+- Create user guides for vault interactions
+- Document governance processes
 
-After successful deployment:
-
-1. **Test all functionality** thoroughly
-2. **Create governance proposals** for parameter updates
-3. **Add more token vaults** as needed
-4. **Monitor performance** and user activity
-5. **Plan for mainnet deployment**
+### 3. Security Considerations
+- Review contract permissions
+- Set up multi-sig for governance
+- Implement emergency pause mechanisms
 
 ## 🔗 Useful Links
 
-- **Somnia Network**: https://somnia.network/
+- **Somnia Testnet**: https://dream-rpc.somnia.network/
 - **Shannon Explorer**: https://shannon-explorer.somnia.network/
-- **Somnia Discord**: https://discord.gg/somnia
-- **FluidVault Repository**: https://github.com/your-username/fluidvault
+- **Hardhat Documentation**: https://hardhat.org/docs
+- **Wagmi Documentation**: https://wagmi.sh/
+
+## 📞 Support
+
+If you encounter issues during deployment:
+1. Check the troubleshooting section above
+2. Review contract logs and error messages
+3. Verify network connectivity and gas settings
+4. Consult the Somnia testnet documentation
 
 ---
 
-**Happy Deploying! 🎉**
-
-For questions or support, reach out to the Somnia community or create an issue in the repository.
+**⚠️ Important Security Notes:**
+- Never commit private keys to version control
+- Use environment variables for sensitive data
+- Test thoroughly on testnet before mainnet deployment
+- Implement proper access controls and governance
