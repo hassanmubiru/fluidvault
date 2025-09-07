@@ -156,6 +156,10 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
           <div>
             <h3 className="font-semibold text-gray-900">{name}</h3>
             <p className="text-sm text-gray-500">{token} Vault</p>
+            <div className="flex items-center mt-1">
+              <div className="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
+              <span className="text-xs text-green-600 font-medium">Live Somnia Testnet</span>
+            </div>
           </div>
         </div>
         <button
@@ -284,22 +288,28 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
 
           {/* Transaction Status */}
           {txHash && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mr-2" />
-                  <span className="text-sm text-blue-700">
-                    {isConfirming ? 'Confirming transaction...' : isConfirmed ? 'Transaction confirmed!' : 'Transaction submitted'}
+                  <div className="w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin mr-2" />
+                  <span className="text-sm text-green-700">
+                    {isConfirming ? 'Confirming on Somnia testnet...' : isConfirmed ? 'Transaction confirmed on Somnia!' : 'Transaction submitted to Somnia testnet'}
                   </span>
                 </div>
                 <a 
                   href={`https://shannon-explorer.somnia.network/tx/${txHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 text-sm underline"
+                  className="text-green-600 hover:text-green-800 text-sm underline flex items-center"
                 >
-                  View on Explorer
+                  View on Somnia Explorer
+                  <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
                 </a>
+              </div>
+              <div className="mt-2 text-xs text-green-600">
+                <strong>Real Somnia Testnet Transaction:</strong> This transaction is processed on the live Somnia network (Chain ID: 50312)
               </div>
             </div>
           )}
