@@ -229,10 +229,11 @@ export default function TransactionLookup({ className = '' }: TransactionLookupP
           <div className="space-y-2">
             <div className="bg-white border border-green-200 rounded p-2">
               <div className="font-mono text-xs text-green-800 break-all mb-1">
-                0x818c2a4cd55811d15224e4cd3988cfae59491e8166bf8c15a11e3f836c58da69
+                0xd14546ac7e5e0156e3dc66bf31f0fd81aef17700791fa0195dbc6252ddc35ee2
               </div>
+              <div className="text-xs text-green-600 mb-1">✅ Verified working transaction</div>
               <button
-                onClick={() => setTxHash('0x818c2a4cd55811d15224e4cd3988cfae59491e8166bf8c15a11e3f836c58da69')}
+                onClick={() => setTxHash('0xd14546ac7e5e0156e3dc66bf31f0fd81aef17700791fa0195dbc6252ddc35ee2')}
                 className="text-xs text-green-600 hover:text-green-800 underline"
               >
                 Use this hash
@@ -240,11 +241,25 @@ export default function TransactionLookup({ className = '' }: TransactionLookupP
             </div>
             
             <div className="bg-white border border-green-200 rounded p-2">
-              <div className="font-mono text-xs text-gray-600 break-all mb-1">
-                0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+              <div className="font-mono text-xs text-green-800 break-all mb-1">
+                0x4a35bc7791fe8106ff0d0141a68ecb4b95786289b8c6931b8b5f00c64ed5d191
               </div>
+              <div className="text-xs text-green-600 mb-1">✅ Verified working transaction</div>
               <button
-                onClick={() => setTxHash('0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef')}
+                onClick={() => setTxHash('0x4a35bc7791fe8106ff0d0141a68ecb4b95786289b8c6931b8b5f00c64ed5d191')}
+                className="text-xs text-green-600 hover:text-green-800 underline"
+              >
+                Use this hash
+              </button>
+            </div>
+            
+            <div className="bg-white border border-green-200 rounded p-2">
+              <div className="font-mono text-xs text-green-800 break-all mb-1">
+                0x380784dc566e0224f36ba077d197a3a6f29b40034f13fc6375e911d94586fdc3
+              </div>
+              <div className="text-xs text-green-600 mb-1">✅ Verified working transaction</div>
+              <button
+                onClick={() => setTxHash('0x380784dc566e0224f36ba077d197a3a6f29b40034f13fc6375e911d94586fdc3')}
                 className="text-xs text-green-600 hover:text-green-800 underline"
               >
                 Use this hash
