@@ -227,7 +227,7 @@ export default function Home() {
                     className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center"
                   >
                     View Network Explorer
-                    <ExternalLink className="w-4 h-4 ml-2" />
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </a>
                   <a 
                     href="https://dream-rpc.somnia.network/"
@@ -236,7 +236,7 @@ export default function Home() {
                     className="border border-green-600 text-green-600 px-6 py-2 rounded-lg hover:bg-green-50 transition-colors flex items-center justify-center"
                   >
                     RPC Endpoint
-                    <ExternalLink className="w-4 h-4 ml-2" />
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </a>
                 </div>
               </div>
