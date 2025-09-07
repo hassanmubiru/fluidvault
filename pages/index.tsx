@@ -8,7 +8,8 @@ import {
   ArrowRight,
   DollarSign,
   Clock,
-  CheckCircle
+  CheckCircle,
+  ExternalLink
 } from 'lucide-react';
 import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
