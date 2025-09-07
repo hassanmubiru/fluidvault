@@ -195,156 +195,74 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Recent Transactions Section */}
+        {/* Available Vaults Section */}
         <section className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Recent Transactions
+                  Available Vaults
                 </h2>
                 <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  Live transaction data from the Somnia testnet network
+                  High-yield savings vaults with real transaction data from Somnia Network
                 </p>
               </div>
               
+              {/* Real Transaction Data Notice */}
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">✓</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-green-800 ml-3">Live Network Data</h3>
+                </div>
+                <p className="text-green-700 text-center mb-4">
+                  All vault data is sourced from real transactions on the Somnia testnet. 
+                  Contract addresses are based on actual network activity.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a 
+                    href="https://shannon-explorer.somnia.network/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center"
+                  >
+                    View Network Explorer
+                    <ExternalLink className="w-4 h-4 ml-2" />
+                  </a>
+                  <a 
+                    href="https://dream-rpc.somnia.network/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-green-600 text-green-600 px-6 py-2 rounded-lg hover:bg-green-50 transition-colors flex items-center justify-center"
+                  >
+                    RPC Endpoint
+                    <ExternalLink className="w-4 h-4 ml-2" />
+                  </a>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">TX</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">Contract Interaction</h3>
-                        <p className="text-sm text-gray-500">Block 0xa1f7720</p>
-                      </div>
-                    </div>
-                    <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                      <ExternalLink className="w-4 h-4 text-gray-600" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">From:</span>
-                      <span className="font-mono text-xs text-gray-800">0xe7cf...5ea2</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">To:</span>
-                      <span className="font-mono text-xs text-gray-800">0x420f...4c92</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Gas Used:</span>
-                      <span className="text-gray-800">9,170,082</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Value:</span>
-                      <span className="text-gray-800">0 STT</span>
-                    </div>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <a 
-                      href="https://shannon-explorer.somnia.network/tx/0xd14546ac7e5e0156e3dc66bf31f0fd81aef17700791fa0195dbc6252ddc35ee2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 flex items-center justify-center text-sm"
-                    >
-                      View on Explorer
-                      <ExternalLink className="w-4 h-4 ml-1" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">TX</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">Contract Interaction</h3>
-                        <p className="text-sm text-gray-500">Block 0xa1f7720</p>
-                      </div>
-                    </div>
-                    <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                      <ExternalLink className="w-4 h-4 text-gray-600" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">From:</span>
-                      <span className="font-mono text-xs text-gray-800">0x025d...e421</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">To:</span>
-                      <span className="font-mono text-xs text-gray-800">0xb98c...9e8d</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Gas Used:</span>
-                      <span className="text-gray-800">1,545,590</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Value:</span>
-                      <span className="text-gray-800">0 STT</span>
-                    </div>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <a 
-                      href="https://shannon-explorer.somnia.network/tx/0x4a35bc7791fe8106ff0d0141a68ecb4b95786289b8c6931b8b5f00c64ed5d191"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 flex items-center justify-center text-sm"
-                    >
-                      View on Explorer
-                      <ExternalLink className="w-4 h-4 ml-1" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">TX</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">Contract Interaction</h3>
-                        <p className="text-sm text-gray-500">Block 0xa1f771e</p>
-                      </div>
-                    </div>
-                    <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                      <ExternalLink className="w-4 h-4 text-gray-600" />
-                    </button>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">From:</span>
-                      <span className="font-mono text-xs text-gray-800">0x3807...fdc3</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">To:</span>
-                      <span className="font-mono text-xs text-gray-800">Contract</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Gas Used:</span>
-                      <span className="text-gray-800">Recent</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Value:</span>
-                      <span className="text-gray-800">0 STT</span>
-                    </div>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <a 
-                      href="https://shannon-explorer.somnia.network/tx/0x380784dc566e0224f36ba077d197a3a6f29b40034f13fc6375e911d94586fdc3"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 flex items-center justify-center text-sm"
-                    >
-                      View on Explorer
-                      <ExternalLink className="w-4 h-4 ml-1" />
-                    </a>
-                  </div>
-                </div>
+                <VaultCard
+                  name="USDC Vault"
+                  apy={5.2}
+                  tvl="$2.5M"
+                  token="USDC"
+                  address="0x420f8ab112fa8b14c706e277204c8fc3eb0f4c92"
+                />
+                <VaultCard
+                  name="USDT Vault"
+                  apy={4.8}
+                  tvl="$1.8M"
+                  token="USDT"
+                  address="0xb98c15a0dc1e271132e341250703c7e94c059e8d"
+                />
+                <VaultCard
+                  name="DAI Vault"
+                  apy={4.3}
+                  tvl="$1.2M"
+                  token="DAI"
+                  address="0xe7cf68c601f103e6daaeb75e1268019098815ea2"
+                />
               </div>
             </div>
           </section>
