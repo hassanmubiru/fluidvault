@@ -14,6 +14,7 @@ import VaultCard from '../components/VaultCard';
 import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
 import NetworkHelper from '../components/NetworkHelper';
+import TransactionLookup from '../components/TransactionLookup';
 
 export default function Home() {
   const [totalTVL, setTotalTVL] = useState('4.5M');
@@ -178,8 +179,23 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Vaults Section */}
+        {/* Transaction Lookup Section */}
         <section className="py-20 bg-white/50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Transaction Lookup
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Look up any transaction on the Somnia testnet
+              </p>
+            </div>
+            <TransactionLookup />
+          </div>
+        </section>
+
+        {/* Vaults Section */}
+        <section className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
