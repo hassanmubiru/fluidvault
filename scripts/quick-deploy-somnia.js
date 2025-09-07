@@ -105,9 +105,9 @@ async function main() {
 # Generated on ${new Date().toISOString()}
 
 # Contract Addresses
-NEXT_PUBLIC_CONTRACT_ADDRESS=${fluidVault.address}
-NEXT_PUBLIC_INTEREST_CALCULATOR_ADDRESS=${interestCalculator.address}
-NEXT_PUBLIC_GOVERNANCE_ADDRESS=${governance.address}
+NEXT_PUBLIC_CONTRACT_ADDRESS=${await fluidVault.getAddress()}
+NEXT_PUBLIC_INTEREST_CALCULATOR_ADDRESS=${await interestCalculator.getAddress()}
+NEXT_PUBLIC_GOVERNANCE_ADDRESS=${await governance.getAddress()}
 
 # Network Configuration
 NEXT_PUBLIC_SOMNIA_RPC_URL=https://dream-rpc.somnia.network/
@@ -131,9 +131,9 @@ DEPLOYMENT_TIMESTAMP=${new Date().toISOString()}
     timestamp: new Date().toISOString(),
     deployer: deployer.address,
     contracts: {
-      FluidVault: fluidVault.address,
-      InterestCalculator: interestCalculator.address,
-      Governance: governance.address
+      FluidVault: await fluidVault.getAddress(),
+      InterestCalculator: await interestCalculator.getAddress(),
+      Governance: await governance.getAddress()
     },
     vaults: vaults.map(v => ({
       name: v.name,
@@ -153,14 +153,14 @@ DEPLOYMENT_TIMESTAMP=${new Date().toISOString()}
 
   console.log("\n🎉 Deployment completed successfully!");
   console.log("\n📋 Contract Addresses:");
-  console.log(`   FluidVault: ${fluidVault.address}`);
-  console.log(`   InterestCalculator: ${interestCalculator.address}`);
-  console.log(`   Governance: ${governance.address}`);
+  console.log(`   FluidVault: ${await fluidVault.getAddress()}`);
+  console.log(`   InterestCalculator: ${await interestCalculator.getAddress()}`);
+  console.log(`   Governance: ${await governance.getAddress()}`);
   
   console.log("\n🔗 Block Explorer Links:");
-  console.log(`   FluidVault: https://shannon-explorer.somnia.network/address/${fluidVault.address}`);
-  console.log(`   InterestCalculator: https://shannon-explorer.somnia.network/address/${interestCalculator.address}`);
-  console.log(`   Governance: https://shannon-explorer.somnia.network/address/${governance.address}`);
+  console.log(`   FluidVault: https://shannon-explorer.somnia.network/address/${await fluidVault.getAddress()}`);
+  console.log(`   InterestCalculator: https://shannon-explorer.somnia.network/address/${await interestCalculator.getAddress()}`);
+  console.log(`   Governance: https://shannon-explorer.somnia.network/address/${await governance.getAddress()}`);
   
   console.log("\n🚀 Next Steps:");
   console.log("   1. Restart your development server: npm run dev");
