@@ -15,6 +15,7 @@ import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
 import NetworkHelper from '../components/NetworkHelper';
 import TransactionLookup from '../components/TransactionLookup';
+import DeploymentGuide from '../components/DeploymentGuide';
 
 export default function Home() {
   const [totalTVL, setTotalTVL] = useState('4.5M');
