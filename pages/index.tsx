@@ -16,6 +16,7 @@ import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
 import NetworkHelper from '../components/NetworkHelper';
 import TransactionLookup from '../components/TransactionLookup';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
   const [totalTVL, setTotalTVL] = useState('4.5M');
@@ -128,10 +129,35 @@ export default function Home() {
                 instant withdrawals, and community governance on Somnia Network.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 flex items-center justify-center">
-                  Start Saving
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </button>
+                <ConnectButton.Custom>
+                  {({
+                    account,
+                    chain,
+                    openAccountModal,
+                    openChainModal,
+                    openConnectModal,
+                    authenticationStatus,
+                    mounted,
+                  }) => {
+                    const ready = mounted && authenticationStatus !== 'loading';
+                    const connected =
+                      ready &&
+                      account &&
+                      chain &&
+                      (!authenticationStatus ||
+                        authenticationStatus === 'authenticated');
+
+                    return (
+                      <button
+                        onClick={connected ? openAccountModal : openConnectModal}
+                        className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 flex items-center justify-center"
+                      >
+                        {connected ? 'Manage Wallet' : 'Start Saving'}
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </button>
+                    );
+                  }}
+                </ConnectButton.Custom>
                 <button className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200">
                   Learn More
                 </button>
