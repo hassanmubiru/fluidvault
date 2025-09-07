@@ -300,6 +300,18 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
             </div>
           )}
 
+          {/* Contract Deployment Notice */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="flex items-center">
+              <svg className="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              <span className="text-sm text-blue-700">
+                <strong>Demo Mode:</strong> Vault contracts are not yet deployed. Transactions simulate the process with real STT transfers.
+              </span>
+            </div>
+          </div>
+
           {/* Transaction Status */}
           {txHash && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
@@ -323,7 +335,9 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
                 </a>
               </div>
               <div className="mt-2 text-xs text-green-600">
-                <strong>Real Somnia Testnet Transaction:</strong> This transaction is signed by your wallet and broadcast to the live Somnia network (Chain ID: 50312)
+                <strong>Real Somnia Testnet Transaction:</strong> This transaction is signed by your wallet and broadcast to the live Somnia network (Chain ID: 50312). 
+                <br />
+                <strong>Note:</strong> Since vault contracts are not yet deployed, this simulates the withdrawal process with a small STT transfer.
               </div>
             </div>
           )}

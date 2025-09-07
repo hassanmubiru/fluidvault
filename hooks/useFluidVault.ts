@@ -216,14 +216,13 @@ export function useFluidVault() {
       // Get current gas price from the network
       const gasPrice = await publicClient.getGasPrice();
       
-      // For withdrawal, we need to call a contract function
       // Since we don't have the actual vault contract deployed, we'll simulate a withdrawal
-      // by sending a transaction with data that represents a withdrawal call
+      // by creating a transaction that represents a withdrawal from the vault
+      // We'll send a small amount of STT to the vault address to simulate the withdrawal process
       const withdrawalData = {
         to: tokenAddress as `0x${string}`, // Vault address
-        value: BigInt(0), // No ETH value for contract call
-        data: '0x' + 'withdraw' + amountWei.toString(16).padStart(64, '0'), // Simulated withdrawal call
-        gas: BigInt(100000), // Higher gas for contract interaction
+        value: BigInt(1000000000000000), // Small amount (0.001 STT) to simulate withdrawal
+        gas: BigInt(21000), // Basic transfer gas
         gasPrice: gasPrice,
         chain: {
           id: 50312, // Somnia testnet chain ID
