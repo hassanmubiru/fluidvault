@@ -119,7 +119,6 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
     setIsLoading(true);
     setError(null);
     setTxHash(null);
-    setIsConfirmed(false); // Reset confirmation status
     
     try {
       console.log('Withdrawing:', withdrawAmount, token, 'from vault:', address);
