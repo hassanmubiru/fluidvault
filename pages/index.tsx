@@ -125,6 +125,13 @@ export default function Home() {
                     Home
                   </a>
                   <a 
+                    href="/strategies" 
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                  >
+                    <TrendingUp className="w-4 h-4" />
+                    Strategies
+                  </a>
+                  <a 
                     href="/governance" 
                     className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
                   >
@@ -226,6 +233,41 @@ export default function Home() {
                   </p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Strategies CTA Section */}
+        <section className="py-20 bg-gradient-to-r from-purple-500 to-pink-500">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <div className="p-4 bg-white/20 rounded-full">
+                  <TrendingUp className="w-12 h-12 text-white" />
+                </div>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Advanced Yield Strategies
+              </h2>
+              <p className="text-xl text-purple-100 mb-8 max-w-3xl mx-auto">
+                Discover and invest in community-created yield strategies. 
+                Maximize your returns with automated yield farming and risk management.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/strategies"
+                  className="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-purple-50 transition-all duration-200 flex items-center justify-center"
+                >
+                  <TrendingUp className="w-5 h-5 mr-2" />
+                  Explore Strategies
+                </a>
+                <a
+                  href="/strategies"
+                  className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-all duration-200 flex items-center justify-center"
+                >
+                  Create Strategy
+                </a>
+              </div>
             </div>
           </div>
         </section>
