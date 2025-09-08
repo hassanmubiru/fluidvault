@@ -22,6 +22,7 @@
     "test:governance": "hardhat run scripts/test-governance.js --network somnia-testnet",
     "deploy:cross-chain": "hardhat run scripts/deploy-cross-chain.js --network somnia-testnet",
     "test:cross-chain": "hardhat run scripts/test-cross-chain.js --network somnia-testnet",
+    "deploy:analytics": "hardhat run scripts/deploy-analytics.js --network somnia-testnet",
     "node": "hardhat node",
     "verify": "hardhat verify"
   },

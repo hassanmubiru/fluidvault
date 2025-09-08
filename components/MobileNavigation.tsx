@@ -9,7 +9,8 @@ import {
   Vote,
   User,
   Settings,
-  Bell
+  Bell,
+  Brain
 } from 'lucide-react';
 import { useAccount } from 'wagmi';
 
@@ -26,6 +27,7 @@ export default function MobileNavigation({ className = '' }: MobileNavigationPro
     { href: '/', label: 'Home', icon: Home },
     { href: '/strategies', label: 'Strategies', icon: TrendingUp },
     { href: '/cross-chain', label: 'Cross-Chain', icon: ArrowRightLeft },
+    { href: '/analytics', label: 'Analytics', icon: Brain },
     { href: '/governance', label: 'Governance', icon: Vote },
   ];
 

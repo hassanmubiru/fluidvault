@@ -292,6 +292,41 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Analytics CTA Section */}
+        <section className="py-20 bg-gradient-to-r from-purple-500 to-pink-500">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <div className="p-4 bg-white/20 rounded-full">
+                  <Brain className="w-12 h-12 text-white" />
+                </div>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Advanced Analytics
+              </h2>
+              <p className="text-xl text-purple-100 mb-8 max-w-3xl mx-auto">
+                Get comprehensive insights into your DeFi portfolio with AI-powered analytics, 
+                risk assessment, and strategy recommendations.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/analytics"
+                  className="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-purple-50 transition-all duration-200 flex items-center justify-center"
+                >
+                  <Brain className="w-5 h-5 mr-2" />
+                  View Analytics
+                </a>
+                <a
+                  href="/analytics"
+                  className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-all duration-200 flex items-center justify-center"
+                >
+                  AI Insights
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Cross-Chain CTA Section */}
         <section className="py-20 bg-gradient-to-r from-indigo-500 to-blue-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

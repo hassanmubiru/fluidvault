@@ -174,17 +174,17 @@ contract AnalyticsEngine is Ownable, ReentrancyGuard, Pausable {
     /**
      * @dev Get historical portfolio data
      * @param user User address
-     * @param days Number of days to retrieve
+     * @param numDays Number of days to retrieve
      * @return Array of historical portfolio metrics
      */
-    function getHistoricalPortfolioData(address user, uint256 days) external view returns (PortfolioMetrics[] memory) {
-        require(days <= MAX_HISTORICAL_ENTRIES, "AnalyticsEngine: Too many days requested");
+    function getHistoricalPortfolioData(address user, uint256 numDays) external view returns (PortfolioMetrics[] memory) {
+        require(numDays <= MAX_HISTORICAL_ENTRIES, "AnalyticsEngine: Too many days requested");
         
-        PortfolioMetrics[] memory historicalData = new PortfolioMetrics[](days);
+        PortfolioMetrics[] memory historicalData = new PortfolioMetrics[](numDays);
         uint256 currentDay = block.timestamp / 1 days;
         
-        for (uint256 i = 0; i < days; i++) {
-            uint256 day = currentDay - (days - 1 - i);
+        for (uint256 i = 0; i < numDays; i++) {
+            uint256 day = currentDay - (numDays - 1 - i);
             historicalData[i] = historicalPortfolios[user][day];
         }
         
