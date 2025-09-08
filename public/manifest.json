@@ -1,0 +1,92 @@
+{
+  "name": "FluidVault - Cross-Chain DeFi Platform",
+  "short_name": "FluidVault",
+  "description": "Advanced yield strategies and cross-chain bridge for decentralized finance",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["finance", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/logo-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "FluidVault Homepage"
+    },
+    {
+      "src": "/screenshots/mobile-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "FluidVault Mobile Homepage"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Strategies",
+      "short_name": "Strategies",
+      "description": "View yield strategies",
+      "url": "/strategies",
+      "icons": [
+        {
+          "src": "/logo-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Cross-Chain Bridge",
+      "short_name": "Bridge",
+      "description": "Transfer assets between chains",
+      "url": "/cross-chain",
+      "icons": [
+        {
+          "src": "/logo-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Governance",
+      "short_name": "Governance",
+      "description": "Participate in governance",
+      "url": "/governance",
+      "icons": [
+        {
+          "src": "/logo-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

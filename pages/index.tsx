@@ -6,6 +6,7 @@ import {
   Zap, 
   Users, 
   ArrowRight,
+  ArrowRightLeft,
   DollarSign,
   Clock,
   CheckCircle,
@@ -16,6 +17,7 @@ import VaultCard from '../components/VaultCard';
 import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
 import NetworkHelper from '../components/NetworkHelper';
+import MobileNavigation from '../components/MobileNavigation';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
@@ -132,6 +134,13 @@ export default function Home() {
                     Strategies
                   </a>
                   <a 
+                    href="/cross-chain" 
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                  >
+                    <ArrowRightLeft className="w-4 h-4" />
+                    Cross-Chain
+                  </a>
+                  <a 
                     href="/governance" 
                     className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
                   >
@@ -140,7 +149,10 @@ export default function Home() {
                   </a>
                 </nav>
               </div>
-              <WalletConnect />
+              <div className="flex items-center space-x-4">
+                <WalletConnect />
+                <MobileNavigation />
+              </div>
             </div>
           </div>
         </header>
@@ -266,6 +278,41 @@ export default function Home() {
                   className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-all duration-200 flex items-center justify-center"
                 >
                   Create Strategy
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Cross-Chain CTA Section */}
+        <section className="py-20 bg-gradient-to-r from-indigo-500 to-blue-500">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <div className="p-4 bg-white/20 rounded-full">
+                  <ArrowRightLeft className="w-12 h-12 text-white" />
+                </div>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Cross-Chain Bridge
+              </h2>
+              <p className="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+                Transfer your assets seamlessly between supported blockchain networks. 
+                Access yield strategies across multiple chains with our secure bridge.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/cross-chain"
+                  className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-all duration-200 flex items-center justify-center"
+                >
+                  <ArrowRightLeft className="w-5 h-5 mr-2" />
+                  Start Bridge Transfer
+                </a>
+                <a
+                  href="/cross-chain"
+                  className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-200 flex items-center justify-center"
+                >
+                  View Networks
                 </a>
               </div>
             </div>
