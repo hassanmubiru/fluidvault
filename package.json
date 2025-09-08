@@ -20,6 +20,7 @@
     "deploy:local": "hardhat run scripts/deploy.js --network localhost",
     "generate:logos": "node scripts/generate-png.js",
     "test:governance": "hardhat run scripts/test-governance.js --network somnia-testnet",
+    "deploy:cross-chain": "hardhat run scripts/deploy-cross-chain.js --network somnia-testnet",
     "node": "hardhat node",
     "verify": "hardhat verify"
   },
