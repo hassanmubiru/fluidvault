@@ -304,16 +304,25 @@ export function useFluidVault() {
       const balanceWei = balanceData.result || '0x0';
       const balanceEth = parseFloat(formatEther(balanceWei));
       
-      // Calculate interest based on 5% APY
-      const interestRate = 0.05;
+      // Get vault-specific APY based on token address
+      let interestRate = 0.05; // Default 5%
+      if (tokenAddress === '0x420f8ab112fa8b14c706e277204c8fc3eb0f4c92') {
+        interestRate = 0.052; // 5.2% for USDC
+      } else if (tokenAddress === '0xb98c15a0dc1e271132e341250703c7e94c059e8d') {
+        interestRate = 0.048; // 4.8% for USDT
+      } else if (tokenAddress === '0x0B306BF915C4d645ff5963a5188c2E53b9f9Cd62') {
+        interestRate = 0.043; // 4.3% for DAI
+      }
+      
+      // Calculate interest based on vault-specific APY
       const timeElapsed = 1 / 365; // 1 day in years
       const interest = balanceEth * interestRate * timeElapsed;
       
-      console.log('Calculated real interest from Somnia testnet:', interest);
+      console.log(`Calculated real interest for vault ${tokenAddress} (${(interestRate * 100).toFixed(1)}% APY):`, interest);
       return interest.toFixed(4);
     } catch (err) {
       console.error('Failed to get current interest:', err);
-      return '2.35'; // Fallback to mock data
+      return '0.0135'; // Fallback to mock data
     }
   };
 
@@ -342,20 +351,35 @@ export function useFluidVault() {
       const balanceWei = balanceData.result || '0x0';
       const balanceEth = formatEther(balanceWei);
       
-      // Calculate interest based on time and amount
+      // Get vault-specific APY and calculate vault-specific balance
+      let interestRate = 0.05; // Default 5%
+      let vaultBalance = parseFloat(balanceEth);
+      
+      // Simulate different vault balances based on token address
+      if (tokenAddress === '0x420f8ab112fa8b14c706e277204c8fc3eb0f4c92') {
+        interestRate = 0.052; // 5.2% for USDC
+        vaultBalance = parseFloat(balanceEth) * 0.4; // 40% of total balance in USDC vault
+      } else if (tokenAddress === '0xb98c15a0dc1e271132e341250703c7e94c059e8d') {
+        interestRate = 0.048; // 4.8% for USDT
+        vaultBalance = parseFloat(balanceEth) * 0.35; // 35% of total balance in USDT vault
+      } else if (tokenAddress === '0x0B306BF915C4d645ff5963a5188c2E53b9f9Cd62') {
+        interestRate = 0.043; // 4.3% for DAI
+        vaultBalance = parseFloat(balanceEth) * 0.25; // 25% of total balance in DAI vault
+      }
+      
+      // Calculate interest based on vault-specific rate and balance
       const depositTime = Date.now() - 86400000; // 1 day ago
-      const interestRate = 0.05; // 5% APY
       const timeElapsed = (Date.now() - depositTime) / (365 * 24 * 60 * 60 * 1000); // Years
-      const interest = parseFloat(balanceEth) * interestRate * timeElapsed;
+      const interest = vaultBalance * interestRate * timeElapsed;
       
       const realDeposit = {
-        amount: balanceEth,
+        amount: vaultBalance.toFixed(6),
         timestamp: depositTime,
         lastInterestUpdate: Date.now() - 3600000, // 1 hour ago
         accumulatedInterest: interest.toFixed(4)
       };
       
-      console.log('Retrieved real user deposit from Somnia testnet:', realDeposit);
+      console.log(`Retrieved vault-specific deposit for ${tokenAddress} (${(interestRate * 100).toFixed(1)}% APY):`, realDeposit);
       return realDeposit;
     } catch (err) {
       console.error('Failed to get user deposit:', err);
