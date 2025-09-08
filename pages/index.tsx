@@ -320,9 +320,9 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div>
-                <div className="flex items-center space-x-2 mb-4">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">FV</span>
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-8 h-8 flex items-center justify-center">
+                    <img src="/logo-icon.svg" alt="FluidVault Logo" className="w-8 h-8" />
                   </div>
                   <span className="text-xl font-bold">FluidVault</span>
                 </div>
