@@ -90,7 +90,7 @@ export default function Home() {
         <title>FluidVault - Decentralized Savings on Somnia</title>
         <meta name="description" content="A cutting-edge decentralized savings platform leveraging Somnia Network's high TPS and sub-second finality" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50">
