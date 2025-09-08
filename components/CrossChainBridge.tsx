@@ -215,11 +215,24 @@ export default function CrossChainBridge({ onBridgeComplete }: CrossChainBridgeP
               <span>Estimated time: {getEstimatedBridgeTime(targetChainId)}</span>
             </div>
 
+            {/* Demo Notice for Bridge */}
+            {error && error.includes('demo data') && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                <div className="flex items-center gap-2 text-yellow-800">
+                  <Info className="w-4 h-4" />
+                  <span className="text-sm font-medium">Demo Mode</span>
+                </div>
+                <p className="text-yellow-700 text-sm mt-1">
+                  Bridge functionality is in demo mode. Smart contracts will be deployed soon.
+                </p>
+              </div>
+            )}
+
             {/* Action Buttons */}
             <div className="flex gap-3">
               <button
                 onClick={handleBridge}
-                disabled={!amount || !recipient || isBridging || !isConnected}
+                disabled={!amount || !recipient || isBridging || !isConnected || Boolean(error && error.includes('demo data'))}
                 className="flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
               >
                 {isBridging ? (
@@ -230,7 +243,7 @@ export default function CrossChainBridge({ onBridgeComplete }: CrossChainBridgeP
                 ) : (
                   <>
                     <ArrowRightLeft className="w-4 h-4" />
-                    Initiate Bridge
+                    {error && error.includes('demo data') ? 'Demo Mode' : 'Initiate Bridge'}
                   </>
                 )}
               </button>
@@ -334,8 +347,22 @@ export default function CrossChainBridge({ onBridgeComplete }: CrossChainBridgeP
         </div>
       )}
 
+      {/* Demo Notice */}
+      {error && error.includes('demo data') && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="flex items-center gap-2 text-blue-800">
+            <Info className="w-5 h-5" />
+            <span className="font-medium">Demo Mode</span>
+          </div>
+          <p className="text-blue-700 mt-1">
+            Cross-chain bridge contract is not deployed yet. This interface shows demo data and functionality.
+            The bridge will be fully functional once the smart contracts are deployed.
+          </p>
+        </div>
+      )}
+
       {/* Error Display */}
-      {error && (
+      {error && !error.includes('demo data') && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
           <div className="flex items-center gap-2 text-red-800">
             <AlertCircle className="w-5 h-5" />
