@@ -18,6 +18,8 @@
     "test:deploy": "hardhat run scripts/test-deployment.js --network somnia-testnet",
     "deploy:check": "hardhat run scripts/deploy-without-key.js --network somnia-testnet",
     "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "generate:logos": "node scripts/generate-png.js",
+    "test:governance": "hardhat run scripts/test-governance.js --network somnia-testnet",
     "node": "hardhat node",
     "verify": "hardhat verify"
   },
@@ -40,6 +42,7 @@
     "ethers": "^6.8.0",
     "lucide-react": "^0.542.0",
     "next": "^15.5.2",
+    "puppeteer": "^24.19.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "viem": "^1.19.0",

@@ -60,37 +60,50 @@ async function main() {
     const InterestCalculator = await ethers.getContractFactory("InterestCalculator");
     console.log("📄 Deploying InterestCalculator...");
     const interestCalculator = await InterestCalculator.deploy();
-    await interestCalculator.deployed();
-    console.log(`✅ InterestCalculator: ${interestCalculator.address}`);
+    await interestCalculator.waitForDeployment();
+    console.log(`✅ InterestCalculator: ${await interestCalculator.getAddress()}`);
+    
+    // Deploy Governance
+    const Governance = await ethers.getContractFactory("Governance");
+    console.log("📄 Deploying Governance...");
+    const governance = await Governance.deploy();
+    await governance.waitForDeployment();
+    console.log(`✅ Governance: ${await governance.getAddress()}`);
     
     // Deploy FluidVault
     const FluidVault = await ethers.getContractFactory("FluidVault");
     console.log("📄 Deploying FluidVault...");
-    const fluidVault = await FluidVault.deploy(interestCalculator.address);
-    await fluidVault.deployed();
-    console.log(`✅ FluidVault: ${fluidVault.address}`);
+    const fluidVault = await FluidVault.deploy(
+      await interestCalculator.getAddress(),
+      await governance.getAddress(),
+      deployer.address // Fee recipient
+    );
+    await fluidVault.waitForDeployment();
+    console.log(`✅ FluidVault: ${await fluidVault.getAddress()}`);
     
     // Deploy MockERC20
     const MockERC20 = await ethers.getContractFactory("MockERC20");
     console.log("📄 Deploying MockERC20...");
     const mockERC20 = await MockERC20.deploy("Somnia Test Token", "STT");
-    await mockERC20.deployed();
-    console.log(`✅ MockERC20: ${mockERC20.address}`);
+    await mockERC20.waitForDeployment();
+    console.log(`✅ MockERC20: ${await mockERC20.getAddress()}`);
     
     console.log("\n🎉 Deployment successful!");
     console.log("==========================================");
     console.log("📋 Contract Addresses:");
-    console.log(`   InterestCalculator: ${interestCalculator.address}`);
-    console.log(`   FluidVault: ${fluidVault.address}`);
-    console.log(`   MockERC20: ${mockERC20.address}`);
+    console.log(`   InterestCalculator: ${await interestCalculator.getAddress()}`);
+    console.log(`   Governance: ${await governance.getAddress()}`);
+    console.log(`   FluidVault: ${await fluidVault.getAddress()}`);
+    console.log(`   MockERC20: ${await mockERC20.getAddress()}`);
     console.log("");
     console.log("🔗 View on explorer:");
-    console.log(`   https://shannon-explorer.somnia.network/address/${fluidVault.address}`);
+    console.log(`   https://shannon-explorer.somnia.network/address/${await fluidVault.getAddress()}`);
     console.log("");
     console.log("📝 Update your .env.local file with these addresses:");
-    console.log(`   NEXT_PUBLIC_CONTRACT_ADDRESS=${fluidVault.address}`);
-    console.log(`   NEXT_PUBLIC_INTEREST_CALCULATOR=${interestCalculator.address}`);
-    console.log(`   NEXT_PUBLIC_MOCK_ERC20=${mockERC20.address}`);
+    console.log(`   NEXT_PUBLIC_CONTRACT_ADDRESS=${await fluidVault.getAddress()}`);
+    console.log(`   NEXT_PUBLIC_INTEREST_CALCULATOR=${await interestCalculator.getAddress()}`);
+    console.log(`   NEXT_PUBLIC_GOVERNANCE_CONTRACT=${await governance.getAddress()}`);
+    console.log(`   NEXT_PUBLIC_MOCK_ERC20=${await mockERC20.getAddress()}`);
     
   } catch (error) {
     console.error("❌ Deployment failed:", error.message);

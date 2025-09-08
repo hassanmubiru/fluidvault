@@ -9,13 +9,13 @@ import {
   DollarSign,
   Clock,
   CheckCircle,
-  ExternalLink
+  ExternalLink,
+  Vote
 } from 'lucide-react';
 import VaultCard from '../components/VaultCard';
 import StatsCard from '../components/StatsCard';
 import WalletConnect from '../components/WalletConnect';
 import NetworkHelper from '../components/NetworkHelper';
-import TransactionLookup from '../components/TransactionLookup';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
@@ -50,6 +50,11 @@ export default function Home() {
       icon: <Users className="w-6 h-6" />,
       title: "Community Driven",
       description: "Decentralized governance allows community to shape platform parameters"
+    },
+    {
+      icon: <Vote className="w-6 h-6" />,
+      title: "Governance System",
+      description: "Vote on proposals, create initiatives, and participate in platform decisions"
     }
   ];
 
@@ -101,13 +106,32 @@ export default function Home() {
         <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <img src="/logo-icon.svg" alt="FluidVault Logo" className="w-8 h-8" />
+              <div className="flex items-center space-x-8">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 flex items-center justify-center">
+                    <img src="/logo-icon.svg" alt="FluidVault Logo" className="w-8 h-8" />
+                  </div>
+                  <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                    FluidVault
+                  </span>
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                  FluidVault
-                </span>
+                
+                {/* Navigation Links */}
+                <nav className="hidden md:flex items-center space-x-6">
+                  <a 
+                    href="/" 
+                    className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                  >
+                    Home
+                  </a>
+                  <a 
+                    href="/governance" 
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                  >
+                    <Vote className="w-4 h-4" />
+                    Governance
+                  </a>
+                </nav>
               </div>
               <WalletConnect />
             </div>
@@ -206,18 +230,38 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Transaction Lookup Section */}
-        <section className="py-20 bg-white/50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Transaction Lookup
+        {/* Governance CTA Section */}
+        <section className="py-20 bg-gradient-to-r from-blue-500 to-cyan-500">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <div className="p-4 bg-white/20 rounded-full">
+                  <Vote className="w-12 h-12 text-white" />
+                </div>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Shape the Future of FluidVault
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Look up any transaction on the Somnia testnet
+              <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                Join our decentralized governance system and help decide the future of the platform. 
+                Vote on proposals, create new initiatives, and participate in community decisions.
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/governance"
+                  className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 flex items-center justify-center"
+                >
+                  <Vote className="w-5 h-5 mr-2" />
+                  Participate in Governance
+                </a>
+                <a
+                  href="/governance"
+                  className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200 flex items-center justify-center"
+                >
+                  Create Proposal
+                </a>
+              </div>
             </div>
-            <TransactionLookup />
           </div>
         </section>
 
