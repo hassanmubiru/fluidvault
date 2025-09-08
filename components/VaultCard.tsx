@@ -146,61 +146,61 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200">
+    <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-all duration-200 h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">{token}</span>
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
+            <span className="text-white font-bold text-xs sm:text-sm">{token}</span>
           </div>
-          <div>
-            <h3 className="font-semibold text-gray-900">{name}</h3>
-            <p className="text-sm text-gray-500">{token} Vault</p>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{name}</h3>
+            <p className="text-xs sm:text-sm text-gray-500 truncate">{token} Vault</p>
             <div className="flex items-center mt-1">
-              <div className="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
-              <span className="text-xs text-green-600 font-medium">Live Somnia Testnet</span>
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mr-1 flex-shrink-0"></div>
+              <span className="text-xs text-green-600 font-medium truncate">Live Somnia Testnet</span>
             </div>
           </div>
         </div>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
         >
           {isExpanded ? (
-            <Minus className="w-4 h-4 text-gray-600" />
+            <Minus className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
           ) : (
-            <Plus className="w-4 h-4 text-gray-600" />
+            <Plus className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
           )}
         </button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="text-center p-3 bg-green-50 rounded-lg">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-3 sm:mb-4">
+        <div className="text-center p-2 sm:p-3 bg-green-50 rounded-lg">
           <div className="flex items-center justify-center mb-1">
-            <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
-            <span className="text-sm font-medium text-green-600">APY</span>
+            <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-600 mr-1" />
+            <span className="text-xs sm:text-sm font-medium text-green-600">APY</span>
           </div>
-          <p className="text-lg font-bold text-green-700">{apy}%</p>
+          <p className="text-sm sm:text-lg font-bold text-green-700">{apy}%</p>
         </div>
-        <div className="text-center p-3 bg-blue-50 rounded-lg">
+        <div className="text-center p-2 sm:p-3 bg-blue-50 rounded-lg">
           <div className="flex items-center justify-center mb-1">
-            <DollarSign className="w-4 h-4 text-blue-600 mr-1" />
-            <span className="text-sm font-medium text-blue-600">TVL</span>
+            <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 mr-1" />
+            <span className="text-xs sm:text-sm font-medium text-blue-600">TVL</span>
           </div>
-          <p className="text-lg font-bold text-blue-700">{tvl}</p>
+          <p className="text-sm sm:text-lg font-bold text-blue-700">{tvl}</p>
         </div>
       </div>
 
       {/* Expandable Content */}
       {isExpanded && (
-        <div className="border-t border-gray-200 pt-4 space-y-4">
+        <div className="border-t border-gray-200 pt-3 sm:pt-4 space-y-3 sm:space-y-4 flex-1">
           {/* Deposit Section */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
               Deposit {token}
             </label>
-            <div className="flex space-x-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="number"
                 value={depositAmount}
@@ -208,37 +208,39 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
                 placeholder="0.00"
                 step="0.01"
                 min="0"
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
-              <button
-                onClick={() => setDepositAmount('100')}
-                className="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
-              >
-                Max
-              </button>
-                     <button
-                       onClick={handleDeposit}
-                       disabled={!isConnected || !depositAmount || isLoading || isApproving || parseFloat(depositAmount) <= 0}
-                       className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-                     >
-                       {(isLoading || isApproving) ? (
-                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                       ) : (
-                         <>
-                           <Plus className="w-4 h-4 mr-1" />
-                           {isApproving ? 'Approving...' : 'Deposit'}
-                         </>
-                       )}
-                     </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setDepositAmount('100')}
+                  className="px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs sm:text-sm"
+                >
+                  Max
+                </button>
+                <button
+                  onClick={handleDeposit}
+                  disabled={!isConnected || !depositAmount || isLoading || isApproving || parseFloat(depositAmount) <= 0}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center text-xs sm:text-sm"
+                >
+                  {(isLoading || isApproving) ? (
+                    <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      {isApproving ? 'Approving...' : 'Deposit'}
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Withdraw Section */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
               Withdraw {token}
             </label>
-            <div className="flex space-x-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="number"
                 value={withdrawAmount}
@@ -247,28 +249,30 @@ export default function VaultCard({ name, apy, tvl, token, address }: VaultCardP
                 step="0.01"
                 min="0"
                 max={userBalance}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
-              <button
-                onClick={() => setWithdrawAmount(userBalance)}
-                className="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
-              >
-                Max
-              </button>
-              <button
-                onClick={handleWithdraw}
-                disabled={!isConnected || !withdrawAmount || isLoading || parseFloat(withdrawAmount) <= 0 || parseFloat(withdrawAmount) > parseFloat(userBalance)}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-              >
-                {isLoading ? (
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <Minus className="w-4 h-4 mr-1" />
-                    Withdraw
-                  </>
-                )}
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setWithdrawAmount(userBalance)}
+                  className="px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs sm:text-sm"
+                >
+                  Max
+                </button>
+                <button
+                  onClick={handleWithdraw}
+                  disabled={!isConnected || !withdrawAmount || isLoading || parseFloat(withdrawAmount) <= 0 || parseFloat(withdrawAmount) > parseFloat(userBalance)}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center text-xs sm:text-sm"
+                >
+                  {isLoading ? (
+                    <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <Minus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      Withdraw
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 
