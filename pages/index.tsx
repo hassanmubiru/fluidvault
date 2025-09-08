@@ -233,17 +233,17 @@ export default function Home() {
                 </p>
               </div>
               
-              {/* Real Transaction Data Notice */}
+              {/* Production Status Notice */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
                 <div className="flex items-center justify-center mb-4">
                   <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                     <span className="text-white font-bold text-sm">✓</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-green-800 ml-3">Live Network Data</h3>
+                  <h3 className="text-lg font-semibold text-green-800 ml-3">Fully Operational</h3>
                 </div>
                 <p className="text-green-700 text-center mb-4">
-                  All vault data is sourced from real transactions on the Somnia testnet. 
-                  Contract addresses are based on actual network activity.
+                  FluidVault is now live with deployed smart contracts on Somnia testnet. 
+                  All deposits, withdrawals, and interest calculations are fully functional.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a 
