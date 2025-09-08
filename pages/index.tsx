@@ -11,7 +11,8 @@ import {
   Clock,
   CheckCircle,
   ExternalLink,
-  Vote
+  Vote,
+  Brain
 } from 'lucide-react';
 import VaultCard from '../components/VaultCard';
 import StatsCard from '../components/StatsCard';
@@ -139,6 +140,13 @@ export default function Home() {
                   >
                     <ArrowRightLeft className="w-4 h-4" />
                     Cross-Chain
+                  </a>
+                  <a 
+                    href="/analytics" 
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                  >
+                    <Brain className="w-4 h-4" />
+                    Analytics
                   </a>
                   <a 
                     href="/governance" 
