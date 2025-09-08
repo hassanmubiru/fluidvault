@@ -9,12 +9,20 @@ import {
   Users,
   Vote,
   Clock,
-  TrendingUp
+  TrendingUp,
+  User,
+  Shield,
+  Timer,
+  BarChart3
 } from 'lucide-react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import ProposalCard from '../components/ProposalCard';
 import CreateProposal from '../components/CreateProposal';
 import GovernanceStats from '../components/GovernanceStats';
+import { DelegationManager } from '../components/DelegationManager';
+import { AdvancedVotingInterface } from '../components/AdvancedVotingInterface';
+import { TimelockDisplay } from '../components/TimelockDisplay';
+import { EscrowManager } from '../components/EscrowManager';
 import { useGovernance, Proposal } from '../hooks/useGovernance';
 
 export default function Governance() {
@@ -34,6 +42,8 @@ export default function Governance() {
   const [filterType, setFilterType] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [refreshing, setRefreshing] = useState(false);
+  const [activeTab, setActiveTab] = useState<'proposals' | 'delegation' | 'voting' | 'timelock' | 'escrow'>('proposals');
+  const [selectedProposal, setSelectedProposal] = useState<number | null>(null);
 
   // Filter proposals
   const filteredProposals = proposals.filter(proposal => {
@@ -152,12 +162,40 @@ export default function Governance() {
           {/* Page Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Community Governance
+              Advanced Governance
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Participate in decentralized decision-making for FluidVault. Vote on proposals, 
-              create new initiatives, and help shape the future of the platform.
+              Participate in decentralized decision-making with delegation, advanced voting, 
+              timelock, and escrow features. Shape the future of FluidVault.
             </p>
+          </div>
+          
+          {/* Tab Navigation */}
+          <div className="mb-8">
+            <div className="border-b border-gray-200">
+              <nav className="-mb-px flex space-x-8">
+                {[
+                  { id: 'proposals', label: 'Proposals', icon: Vote },
+                  { id: 'delegation', label: 'Delegation', icon: User },
+                  { id: 'voting', label: 'Advanced Voting', icon: BarChart3 },
+                  { id: 'timelock', label: 'Timelock', icon: Timer },
+                  { id: 'escrow', label: 'Escrow', icon: Shield }
+                ].map(({ id, label, icon: Icon }) => (
+                  <button
+                    key={id}
+                    onClick={() => setActiveTab(id as any)}
+                    className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
+                      activeTab === id
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5 mr-2" />
+                    {label}
+                  </button>
+                ))}
+              </nav>
+            </div>
           </div>
 
           {/* Governance Stats */}
@@ -165,142 +203,195 @@ export default function Governance() {
             <GovernanceStats />
           </div>
 
-          {/* Controls */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-            <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-              {/* Search and Filters */}
-              <div className="flex flex-col sm:flex-row gap-4 flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <input
-                    type="text"
-                    placeholder="Search proposals..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full sm:w-64"
-                  />
+          {/* Tab Content */}
+          {activeTab === 'proposals' && (
+            <>
+              {/* Controls */}
+              <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+                <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                  {/* Search and Filters */}
+                  <div className="flex flex-col sm:flex-row gap-4 flex-1">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <input
+                        type="text"
+                        placeholder="Search proposals..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full sm:w-64"
+                      />
+                    </div>
+                    
+                    <select
+                      value={filterType}
+                      onChange={(e) => setFilterType(e.target.value)}
+                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="all">All Types</option>
+                      <option value="0">Interest Rate Update</option>
+                      <option value="1">Platform Fee Update</option>
+                      <option value="2">Vault Creation</option>
+                      <option value="3">Vault Deactivation</option>
+                      <option value="4">Operator Management</option>
+                      <option value="5">Emergency Pause</option>
+                      <option value="6">Parameter Update</option>
+                    </select>
+                    
+                    <select
+                      value={filterStatus}
+                      onChange={(e) => setFilterStatus(e.target.value)}
+                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="all">All Status</option>
+                      <option value="active">Active</option>
+                      <option value="ready">Ready to Execute</option>
+                      <option value="executed">Executed</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleRefresh}
+                      disabled={refreshing}
+                      className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                    >
+                      <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+                      Refresh
+                    </button>
+                    
+                    {isConnected && (
+                      <button
+                        onClick={() => setShowCreateModal(true)}
+                        className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Create Proposal
+                      </button>
+                    )}
+                  </div>
                 </div>
-                
-                <select
-                  value={filterType}
-                  onChange={(e) => setFilterType(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="all">All Types</option>
-                  <option value="0">Interest Rate Update</option>
-                  <option value="1">Platform Fee Update</option>
-                  <option value="2">Vault Creation</option>
-                  <option value="3">Vault Deactivation</option>
-                  <option value="4">Operator Management</option>
-                  <option value="5">Emergency Pause</option>
-                  <option value="6">Parameter Update</option>
-                </select>
-                
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="all">All Status</option>
-                  <option value="active">Active</option>
-                  <option value="ready">Ready to Execute</option>
-                  <option value="executed">Executed</option>
-                  <option value="cancelled">Cancelled</option>
-                </select>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-3">
-                <button
-                  onClick={handleRefresh}
-                  disabled={refreshing}
-                  className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                >
-                  <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-                  Refresh
-                </button>
-                
-                {isConnected && (
-                  <button
-                    onClick={() => setShowCreateModal(true)}
-                    className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
-                  >
-                    <Plus className="w-4 h-4" />
-                    Create Proposal
-                  </button>
+              {/* Proposals List */}
+              <div className="space-y-6">
+                {isLoading ? (
+                  <div className="text-center py-12">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading proposals...</p>
+                  </div>
+                ) : error ? (
+                  <div className="text-center py-12">
+                    <div className="text-red-500 mb-4">
+                      <Vote className="w-12 h-12 mx-auto" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      Failed to Load Proposals
+                    </h3>
+                    <p className="text-gray-600 mb-4">{error}</p>
+                    <button
+                      onClick={handleRefresh}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                ) : filteredProposals.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-gray-400 mb-4">
+                      <Vote className="w-12 h-12 mx-auto" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      No Proposals Found
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {proposals.length === 0 
+                        ? "No proposals have been created yet. Be the first to create one!"
+                        : "No proposals match your current filters. Try adjusting your search criteria."
+                      }
+                    </p>
+                    {isConnected && proposals.length === 0 && (
+                      <button
+                        onClick={() => setShowCreateModal(true)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                      >
+                        Create First Proposal
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-xl font-semibold text-gray-900">
+                        Proposals ({filteredProposals.length})
+                      </h2>
+                    </div>
+                    
+                    <div className="grid gap-6">
+                      {filteredProposals.map((proposal) => (
+                        <ProposalCard
+                          key={proposal.id}
+                          proposal={proposal}
+                          onVote={handleVote}
+                          onExecute={handleExecute}
+                          onCancel={handleCancel}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
-            </div>
-          </div>
+            </>
+          )}
 
-          {/* Proposals List */}
-          <div className="space-y-6">
-            {isLoading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading proposals...</p>
-              </div>
-            ) : error ? (
-              <div className="text-center py-12">
-                <div className="text-red-500 mb-4">
-                  <Vote className="w-12 h-12 mx-auto" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Failed to Load Proposals
-                </h3>
-                <p className="text-gray-600 mb-4">{error}</p>
-                <button
-                  onClick={handleRefresh}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
-                >
-                  Try Again
-                </button>
-              </div>
-            ) : filteredProposals.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-gray-400 mb-4">
-                  <Vote className="w-12 h-12 mx-auto" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  No Proposals Found
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  {proposals.length === 0 
-                    ? "No proposals have been created yet. Be the first to create one!"
-                    : "No proposals match your current filters. Try adjusting your search criteria."
-                  }
-                </p>
-                {isConnected && proposals.length === 0 && (
+          {activeTab === 'delegation' && (
+            <DelegationManager />
+          )}
+
+          {activeTab === 'voting' && (
+            <div className="space-y-6">
+              {selectedProposal ? (
+                <AdvancedVotingInterface proposalId={selectedProposal} />
+              ) : (
+                <div className="text-center py-12">
+                  <BarChart3 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Select a Proposal</h3>
+                  <p className="text-gray-600 mb-4">Choose a proposal from the Proposals tab to use advanced voting</p>
                   <button
-                    onClick={() => setShowCreateModal(true)}
+                    onClick={() => setActiveTab('proposals')}
                     className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
                   >
-                    Create First Proposal
+                    View Proposals
                   </button>
-                )}
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-900">
-                    Proposals ({filteredProposals.length})
-                  </h2>
                 </div>
-                
-                <div className="grid gap-6">
-                  {filteredProposals.map((proposal) => (
-                    <ProposalCard
-                      key={proposal.id}
-                      proposal={proposal}
-                      onVote={handleVote}
-                      onExecute={handleExecute}
-                      onCancel={handleCancel}
-                    />
-                  ))}
+              )}
+            </div>
+          )}
+
+          {activeTab === 'timelock' && (
+            <div className="space-y-6">
+              {selectedProposal ? (
+                <TimelockDisplay proposalId={selectedProposal} />
+              ) : (
+                <div className="text-center py-12">
+                  <Timer className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Select a Proposal</h3>
+                  <p className="text-gray-600 mb-4">Choose a proposal from the Proposals tab to view timelock information</p>
+                  <button
+                    onClick={() => setActiveTab('proposals')}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                  >
+                    View Proposals
+                  </button>
                 </div>
-              </>
-            )}
-          </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'escrow' && (
+            <EscrowManager />
+          )}
         </main>
 
         {/* Create Proposal Modal */}
